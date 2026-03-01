@@ -184,15 +184,17 @@
                                                                         <td class="pe-4 text-end">
                                                                             <div class="small fw-semibold text-main">
                                                                                 <%= new
-                                                                                    Date(payment.created_on).toLocaleDateString('en-GB',
-                                                                                    { day: '2-digit' , month: 'short' })
-                                                                                    %>
+                                                                                    Date(payment.created_on).toLocaleString('en-IN',
+                                                                                    { day: '2-digit' , month: 'short' ,
+                                                                                    year: 'numeric' ,
+                                                                                    timeZone: 'Asia/Kolkata' }) %>
                                                                             </div>
                                                                             <div class="extra-small text-dim">
                                                                                 <%= new
-                                                                                    Date(payment.created_on).toLocaleTimeString('en-GB',
+                                                                                    Date(payment.created_on).toLocaleString('en-IN',
                                                                                     { hour: '2-digit' ,
-                                                                                    minute: '2-digit' }) %>
+                                                                                    minute: '2-digit' , hour12: true,
+                                                                                    timeZone: 'Asia/Kolkata' }) %>
                                                                             </div>
                                                                         </td>
                                                                     </tr>

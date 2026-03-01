@@ -143,7 +143,7 @@ router.post('/verify', async (req, res) => {
             const response = await fetch(url);
             const json = await response.json();
 
-            if (json && json.STATUS === 'TXN_SUCCESS' && json.TXNAMOUNT == payment.amount) {
+            if (json && json.STATUS === 'TXN_SUCCESS' && parseFloat(json.TXNAMOUNT).toFixed(2) === parseFloat(payment.amount).toFixed(2)) {
                 await supabase.from('payments').update({
                     utr: json.BANKTXNID,
                     paid_on: new Date().toISOString(),
