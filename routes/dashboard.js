@@ -333,7 +333,6 @@ router.get('/payment_link', isAuth, async (req, res) => {
     const { data: payments } = await supabase.from('payments')
         .select('*')
         .eq('user_id', userId)
-        .eq('remark2', 'PAYMENT_LINK')
         .order('id', { ascending: false });
 
     res.render('auth/payment_link', { user, payments, currentPage: 'payment_link', paymentlink: null });
@@ -373,12 +372,11 @@ router.post('/payment_link', isAuth, async (req, res) => {
         created_on: new Date().toISOString()
     }]);
 
-    const paymentlink = `http://${req.get('host')}/payment/${paymentId}`;
+    const paymentlink = `https://${req.get('host')}/payment/${paymentId}`;
 
     const { data: payments } = await supabase.from('payments')
         .select('*')
         .eq('user_id', userId)
-        .eq('remark2', 'PAYMENT_LINK')
         .order('id', { ascending: false });
 
     res.render('auth/payment_link', { payments, currentPage: 'payment_link', paymentlink });

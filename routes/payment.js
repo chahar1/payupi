@@ -27,7 +27,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     const { data: existingOrder } = await supabase
         .from('payments')
         .select('id')
-        .eq('trxId', order_id)
+        .eq('trx_id', order_id)
         .single();
 
     if (existingOrder) {
@@ -55,20 +55,33 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
             status: '0',
             method: method,
             redirect_url: redirect_url,
-            remark1: remark1,
-            remark2: remark2
+            remark1: remark1 || 'API_ORDER',
+            remark2: remark2 || 'PAYMENT_LINK'
         }]);
 
     if (insertError) {
         return res.status(500).json({ status: "FAILED", message: "DATABASE_ERROR" });
     }
 
+    // 5. Generate Direct UPI Intent for Mobile Apps
+    const { data: merchant } = await supabase.from('merchants').select('*').eq('user_id', user.id).single();
+    let upiId = '';
+    if (method === 'PhonePe') upiId = merchant.phonepe_upi_id;
+    else if (method === 'Paytm') upiId = merchant.paytm_upi_id;
+    else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
+    else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
+
+    // Clean and shorten the transaction reference (max 35 chars for UPI)
+    const cleanTr = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
+    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${cleanTr}&cu=INR`;
+
     res.status(201).json({
         status: true,
         message: "Order Created Successfully",
         result: {
             orderId: order_id,
-            payment_url: `http://${req.headers.host}/payment/${paymentId}`
+            payment_url: `https://${req.headers.host}/payment/${paymentId}`,
+            upi_intent: upiIntent
         }
     });
 });
