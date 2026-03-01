@@ -1,13 +1,7 @@
 {
     "functions": {
         "app.js": {
-            "includeFiles": [
-                "views/**",
-                "routes/**",
-                "lib/**",
-                "config/**",
-                ".env"
-            ]
+            "includeFiles": "{views,routes,lib,config}/**"
         }
     },
     "rewrites": [
