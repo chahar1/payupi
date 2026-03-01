@@ -1,10 +1,9 @@
 {
     "functions": {
-        "api/index.js": {
-            "includeFiles": "views/**"
+        "app.js": {
+            "includeFiles": "views/**,routes/**,lib/**,config/**"
         }
     },
-    "cleanUrls": true,
     "rewrites": [
         {
             "source": "/css/(.*)",
@@ -20,7 +19,7 @@
         },
         {
             "source": "/(.*)",
-            "destination": "/api/index.js"
+            "destination": "/app.js"
         }
     ]
 }
