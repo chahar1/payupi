@@ -22,6 +22,14 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+// Helper for API error messages
+const apiMethods = ['createOrder', 'create-order', 'check-order', 'check-status', 'verify'];
+apiMethods.forEach(method => {
+    app.get([`/${method}`, `/api/${method}`], (req, res) => {
+        res.status(405).json({ status: "FAILED", message: "METHOD_NOT_ALLOWED_USE_POST" });
+    });
+});
+
 const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'contact', 'privacy', 'terms', 'refund'];
 publicPages.forEach(page => {
     app.get(`/${page}`, (req, res) => {

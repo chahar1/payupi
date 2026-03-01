@@ -4,7 +4,7 @@ const supabase = require('../config/supabase');
 const crypto = require('crypto');
 
 // Create Order API
-router.post('/createOrder', async (req, res) => {
+router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, res) => {
     const { customer_mobile, user_token, amount, order_id, redirect_url, remark1, remark2 } = req.body;
 
     // 1. Validate User
@@ -74,7 +74,7 @@ router.post('/createOrder', async (req, res) => {
 });
 
 // Check Order API
-router.post('/check-order', async (req, res) => {
+router.post(['/check-order', '/check-status', '/api/check-status'], async (req, res) => {
     const { user_token, order_id } = req.body;
 
     const { data: user } = await supabase.from('users').select('id').eq('user_token', user_token).single();
