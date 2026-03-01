@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Sample Codes | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-2 tracking-tight text-main">Developer Guide</h2>
+                                <p class="text-muted small">Integrate Paybilupi seamlessly with our comprehensive
+                                    developer documentation and SDKs.</p>
+                            </div>
+
+                            <div class="row g-4 mb-5 pb-2 slide-up">
+                                <div class="col-md-4">
+                                    <a href="/apidetails"
+                                        class="premium-card p-4 d-flex flex-column text-decoration-none h-100 hover-scale transition-all border border-light">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-3"
+                                            style="width: 48px; height: 48px;">
+                                            <i class="fi fi-rr-book-alt fs-5"></i>
+                                        </div>
+                                        <h6 class="fw-bold text-main mb-1">API Reference</h6>
+                                        <p class="text-muted small mb-0 mt-auto">Detailed endpoint documentation</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#"
+                                        class="premium-card p-4 d-flex flex-column text-decoration-none h-100 hover-scale transition-all border border-light">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-3"
+                                            style="width: 48px; height: 48px;">
+                                            <i class="fi fi-rr-puzzle-piece"></i>
+                                        </div>
+                                        <h6 class="fw-bold text-main mb-1">Plugins & SDKs</h6>
+                                        <p class="text-muted small mb-0 mt-auto">WooCommerce, Node.js, PHP</p>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="#"
+                                        class="premium-card p-4 d-flex flex-column text-decoration-none h-100 hover-scale transition-all border border-light">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-3"
+                                            style="width: 48px; height: 48px;">
+                                            <i class="fi fi-rr-headset fs-5"></i>
+                                        </div>
+                                        <h6 class="fw-bold text-main mb-1">Technical Support</h6>
+                                        <p class="text-muted small mb-0 mt-auto">Get help from our engineers</p>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-4 slide-up">
+                                <h5 class="fw-bold mb-0 text-main d-flex align-items-center gap-2">
+                                    <i class="fi fi-rr-code-simple text-primary"></i> Integration Examples
+                                </h5>
+                            </div>
+
+                            <div class="premium-card p-0 overflow-hidden slide-up border border-light shadow-sm">
+                                <div
+                                    class="bg-main border-bottom border-light px-4 py-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+                                    <ul class="nav nav-pills gap-2 flex-nowrap overflow-auto hide-scrollbar pb-2 pb-md-0"
+                                        id="codeTabs" role="tablist" style="margin-bottom: -8px;">
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link active px-3 py-2 extra-small fw-bold rounded-3 border-0 bg-transparent text-muted text-nowrap"
+                                                id="nodejs-tab" data-bs-toggle="pill" data-bs-target="#nodejs"
+                                                type="button" role="tab" aria-controls="nodejs" aria-selected="true"
+                                                onclick="updateNavStyles(this)"><i
+                                                    class="fab fa-node-js text-success me-1"></i> Node.js</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link px-3 py-2 extra-small fw-bold rounded-3 border-0 bg-transparent text-muted text-nowrap"
+                                                id="php-tab" data-bs-toggle="pill" data-bs-target="#php" type="button"
+                                                role="tab" aria-controls="php" aria-selected="false"
+                                                onclick="updateNavStyles(this)"><i
+                                                    class="fab fa-php text-primary me-1"></i> PHP</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link px-3 py-2 extra-small fw-bold rounded-3 border-0 bg-transparent text-muted text-nowrap"
+                                                id="java-tab" data-bs-toggle="pill" data-bs-target="#java" type="button"
+                                                role="tab" aria-controls="java" aria-selected="false"
+                                                onclick="updateNavStyles(this)"><i
+                                                    class="fab fa-java text-danger me-1"></i> Java</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link px-3 py-2 extra-small fw-bold rounded-3 border-0 bg-transparent text-muted text-nowrap"
+                                                id="fetch-tab" data-bs-toggle="pill" data-bs-target="#fetch"
+                                                type="button" role="tab" aria-controls="fetch" aria-selected="false"
+                                                onclick="updateNavStyles(this)"><i
+                                                    class="fab fa-js text-warning me-1"></i> JS Fetch</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link px-3 py-2 extra-small fw-bold rounded-3 border-0 bg-transparent text-muted text-nowrap"
+                                                id="flutter-tab" data-bs-toggle="pill" data-bs-target="#flutter"
+                                                type="button" role="tab" aria-controls="flutter" aria-selected="false"
+                                                onclick="updateNavStyles(this)"><i
+                                                    class="fas fa-mobile-alt text-info me-1"></i> Flutter</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button
+                                                class="nav-link px-3 py-2 extra-small fw-bold rounded-3 border-0 bg-transparent text-muted text-nowrap"
+                                                id="python-tab" data-bs-toggle="pill" data-bs-target="#python"
+                                                type="button" role="tab" aria-controls="python" aria-selected="false"
+                                                onclick="updateNavStyles(this)"><i
+                                                    class="fab fa-python text-warning me-1"></i> Python</button>
+                                        </li>
+                                    </ul>
+                                    <button
+                                        class="btn btn-sm btn-alt rounded-2 extra-small px-3 shadow-none d-flex align-items-center gap-2 align-self-start align-self-md-auto text-nowrap"
+                                        onclick="copyActiveCode()">
+                                        <i class="fas fa-copy"></i> Copy Snippet
+                                    </button>
+                                </div>
+                                <div class="bg-dark p-4 p-md-5 text-white position-relative" style="min-height: 400px;">
+                                    <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                        <i class="fas fa-code-branch" style="font-size: 8rem;"></i>
+                                    </div>
+
+                                    <div class="tab-content position-relative z-1" id="codeTabsContent">
+                                        <!-- Node.js Tab -->
+                                        <div class="tab-pane fade show active" id="nodejs" role="tabpanel"
+                                            aria-labelledby="nodejs-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-warning">const</span> <span class="text-primary">axios</span> = <span class="text-success">require</span>(<span class="text-danger">'axios'</span>);
+
+<span class="text-warning">const</span> data = {
+    customer_mobile: <span class="text-danger">"9999999999"</span>,
+    user_token: <span class="text-danger">"<%= user.user_token %>"</span>,
+    amount: <span class="text-danger">"10.00"</span>,
+    order_id: <span class="text-danger">"TXN_"</span> + Date.<span class="text-success">now</span>(),
+    redirect_url: <span class="text-danger">"https://yourwebsite.com/success"</span>,
+    remark1: <span class="text-danger">"Payment description"</span>,
+    remark2: <span class="text-danger">"Additional notes"</span>
+};
+
+<span class="text-primary">axios</span>.<span class="text-success">post</span>(<span class="text-danger">'http://<%= host %>/api/create-order'</span>, data)
+    .<span class="text-success">then</span>(res => {
+        <span class="text-warning">if</span> (res.data.status) {
+            console.<span class="text-success">log</span>(<span class="text-danger">'Payment Checkout URL:'</span>, res.data.result.payment_url);
+        }
+    })
+    .<span class="text-success">catch</span>(err => console.<span class="text-success">error</span>(err));
+</pre>
+                                        </div>
+
+                                        <!-- PHP Tab -->
+                                        <div class="tab-pane fade" id="php" role="tabpanel" aria-labelledby="php-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-warning">&lt;?php</span>
+<span class="text-primary">$curl</span> = <span class="text-success">curl_init</span>();
+
+<span class="text-primary">$data</span> = [
+    <span class="text-danger">"customer_mobile"</span> => <span class="text-danger">"9999999999"</span>,
+    <span class="text-danger">"user_token"</span>      => <span class="text-danger">"<%= user.user_token %>"</span>,
+    <span class="text-danger">"amount"</span>          => <span class="text-danger">"10.00"</span>,
+    <span class="text-danger">"order_id"</span>        => <span class="text-danger">"TXN_"</span> . <span class="text-success">time</span>(),
+    <span class="text-danger">"redirect_url"</span>    => <span class="text-danger">"https://yourwebsite.com/success"</span>,
+    <span class="text-danger">"remark1"</span>         => <span class="text-danger">"Payment description"</span>,
+    <span class="text-danger">"remark2"</span>         => <span class="text-danger">"Additional notes"</span>
+];
+
+<span class="text-success">curl_setopt_array</span>(<span class="text-primary">$curl</span>, [
+    CURLOPT_URL => <span class="text-danger">"http://<%= host %>/api/create-order"</span>,
+    CURLOPT_RETURNTRANSFER => <span class="text-warning">true</span>,
+    CURLOPT_POST => <span class="text-warning">true</span>,
+    CURLOPT_POSTFIELDS => <span class="text-success">json_encode</span>(<span class="text-primary">$data</span>),
+    CURLOPT_HTTPHEADER => [<span class="text-danger">"Content-Type: application/json"</span>]
+]);
+
+<span class="text-primary">$response</span> = <span class="text-success">curl_exec</span>(<span class="text-primary">$curl</span>);
+<span class="text-success">curl_close</span>(<span class="text-primary">$curl</span>);
+
+<span class="text-keyword">echo</span> <span class="text-primary">$response</span>;
+<span class="text-warning">?&gt;</span>
+</pre>
+                                        </div>
+
+                                        <!-- Java Tab -->
+                                        <div class="tab-pane fade" id="java" role="tabpanel" aria-labelledby="java-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-warning">import</span> java.net.URI;
+<span class="text-warning">import</span> java.net.http.HttpClient;
+<span class="text-warning">import</span> java.net.http.HttpRequest;
+<span class="text-warning">import</span> java.net.http.HttpResponse;
+
+<span class="text-warning">public class</span> <span class="text-primary">PaymentClient</span> {
+    <span class="text-warning">public static void</span> <span class="text-success">main</span>(String[] args) <span class="text-warning">throws</span> Exception {
+        <span class="text-primary">String</span> jsonBody = <span class="text-danger">"{"</span> +
+            <span class="text-danger">"\"customer_mobile\":\"9999999999\","</span> +
+            <span class="text-danger">"\"user_token\":\"<%= user.user_token %>\","</span> +
+            <span class="text-danger">"\"amount\":\"10.00\","</span> +
+            <span class="text-danger">"\"order_id\":\"TXN_123456789\","</span> +
+            <span class="text-danger">"\"redirect_url\":\"https://yourwebsite.com/success\","</span> +
+            <span class="text-danger">"\"remark1\":\"test\","</span> +
+            <span class="text-danger">"\"remark2\":\"test\""</span> +
+            <span class="text-danger">"}"</span>;
+
+        <span class="text-primary">HttpClient</span> client = HttpClient.<span class="text-success">newHttpClient</span>();
+        <span class="text-primary">HttpRequest</span> request = HttpRequest.<span class="text-success">newBuilder</span>()
+            .<span class="text-success">uri</span>(URI.<span class="text-success">create</span>(<span class="text-danger">"http://<%= host %>/api/create-order"</span>))
+            .<span class="text-success">header</span>(<span class="text-danger">"Content-Type"</span>, <span class="text-danger">"application/json"</span>)
+            .<span class="text-success">POST</span>(HttpRequest.BodyPublishers.<span class="text-success">ofString</span>(jsonBody))
+            .<span class="text-success">build</span>();
+
+        <span class="text-primary">HttpResponse</span>&lt;<span class="text-primary">String</span>&gt; response = client.<span class="text-success">send</span>(request, HttpResponse.BodyHandlers.<span class="text-success">ofString</span>());
+        System.out.<span class="text-success">println</span>(response.<span class="text-success">body</span>());
+    }
+}
+</pre>
+                                        </div>
+
+                                        <!-- JS Fetch Tab -->
+                                        <div class="tab-pane fade" id="fetch" role="tabpanel"
+                                            aria-labelledby="fetch-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-success">fetch</span>(<span class="text-danger">'http://<%= host %>/api/create-order'</span>, {
+    <span class="text-warning">method</span>: <span class="text-danger">'POST'</span>,
+    <span class="text-warning">headers</span>: { <span class="text-danger">'Content-Type'</span>: <span class="text-danger">'application/json'</span> },
+    <span class="text-warning">body</span>: JSON.<span class="text-success">stringify</span>({
+        customer_mobile: <span class="text-danger">"9999999999"</span>,
+        user_token: <span class="text-danger">"<%= user.user_token %>"</span>,
+        amount: <span class="text-danger">"10.00"</span>,
+        order_id: <span class="text-danger">"TXN_"</span> + Math.<span class="text-success">floor</span>(Date.<span class="text-success">now</span>() / 1000),
+        redirect_url: <span class="text-danger">"https://yourwebsite.com/success"</span>,
+        remark1: <span class="text-danger">"Payment description"</span>,
+        remark2: <span class="text-danger">"Additional notes"</span>
+    })
+})
+.<span class="text-success">then</span>(response => response.<span class="text-success">json</span>())
+.<span class="text-success">then</span>(data => console.<span class="text-success">log</span>(data))
+.<span class="text-success">catch</span>(error => console.<span class="text-success">error</span>(<span class="text-danger">'Error:'</span>, error));
+</pre>
+                                        </div>
+
+                                        <!-- Flutter Tab -->
+                                        <div class="tab-pane fade" id="flutter" role="tabpanel"
+                                            aria-labelledby="flutter-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-warning">import</span> <span class="text-danger">'package:http/http.dart'</span> <span class="text-warning">as</span> http;
+<span class="text-warning">import</span> <span class="text-danger">'dart:convert'</span>;
+
+<span class="text-warning">Future</span>&lt;<span class="text-warning">void</span>&gt; <span class="text-success">createOrder</span>() <span class="text-warning">async</span> {
+  <span class="text-warning">final</span> url = Uri.<span class="text-success">parse</span>(<span class="text-danger">'http://<%= host %>/api/create-order'</span>);
+  <span class="text-warning">final</span> body = json.<span class="text-success">encode</span>({
+    <span class="text-danger">'customer_mobile'</span>: <span class="text-danger">'9999999999'</span>,
+    <span class="text-danger">'user_token'</span>: <span class="text-danger">'<%= user.user_token %>'</span>,
+    <span class="text-danger">'amount'</span>: <span class="text-danger">'10.00'</span>,
+    <span class="text-danger">'order_id'</span>: <span class="text-danger">'TXN_${DateTime.now().millisecondsSinceEpoch}'</span>,
+    <span class="text-danger">'redirect_url'</span>: <span class="text-danger">'https://yourwebsite.com/success'</span>,
+    <span class="text-danger">'remark1'</span>: <span class="text-danger">'Payment description'</span>,
+    <span class="text-danger">'remark2'</span>: <span class="text-danger">'Additional notes'</span>
+  });
+
+  <span class="text-warning">final</span> response = <span class="text-warning">await</span> http.<span class="text-success">post</span>(
+    url,
+    <span class="text-warning">headers</span>: {<span class="text-danger">'Content-Type'</span>: <span class="text-danger">'application/json'</span>},
+    <span class="text-warning">body</span>: body,
+  );
+
+  <span class="text-success">print</span>(response.<span class="text-property">body</span>);
+}
+</pre>
+                                        </div>
+
+                                        <!-- Python Tab -->
+                                        <div class="tab-pane fade" id="python" role="tabpanel"
+                                            aria-labelledby="python-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-warning">import</span> requests
+<span class="text-warning">import</span> time
+
+<span class="text-primary">url</span> = <span class="text-danger">"http://<%= host %>/api/create-order"</span>
+<span class="text-primary">payload</span> = {
+    <span class="text-danger">"customer_mobile"</span>: <span class="text-danger">"9999999999"</span>,
+    <span class="text-danger">"user_token"</span>: <span class="text-danger">"<%= user.user_token %>"</span>,
+    <span class="text-danger">"amount"</span>: <span class="text-danger">"10.00"</span>,
+    <span class="text-danger">"order_id"</span>: <span class="text-danger">f"TXN_{<span class="text-success">int</span>(time.<span class="text-success">time</span>())}"</span>,
+    <span class="text-danger">"redirect_url"</span>: <span class="text-danger">"https://yourwebsite.com/success"</span>,
+    <span class="text-danger">"remark1"</span>: <span class="text-danger">"Payment description"</span>,
+    <span class="text-danger">"remark2"</span>: <span class="text-danger">"Additional notes"</span>
+}
+<span class="text-primary">headers</span> = {<span class="text-danger">"Content-Type"</span>: <span class="text-danger">"application/json"</span>}
+
+<span class="text-primary">response</span> = requests.<span class="text-success">post</span>(url, <span class="text-warning">json</span>=payload, <span class="text-warning">headers</span>=headers)
+<span class="text-success">print</span>(response.<span class="text-success">json</span>())
+</pre>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                function updateNavStyles(clickedBtn) {
+                                    document.querySelectorAll('#codeTabs .nav-link').forEach(btn => {
+                                        btn.classList.remove('bg-primary', 'bg-opacity-10', 'text-primary');
+                                        btn.classList.add('text-muted');
+                                    });
+                                    clickedBtn.classList.remove('text-muted');
+                                    clickedBtn.classList.add('bg-primary', 'bg-opacity-10', 'text-primary');
+                                }
+
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    const activeTab = document.querySelector('#codeTabs .nav-link.active');
+                                    if (activeTab) {
+                                        updateNavStyles(activeTab);
+                                    }
+                                });
+
+                                function copyActiveCode() {
+                                    const activeTab = document.querySelector('.tab-pane.show.active .code-block');
+                                    if (activeTab) {
+                                        navigator.clipboard.writeText(activeTab.innerText).then(() => {
+                                            alert('Code snippet copied to clipboard!');
+                                        }).catch(err => {
+                                            console.error('Failed to copy code snippet: ', err);
+                                        });
+                                    }
+                                }
+                            </script>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>My Profile | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5" style="min-height: calc(100vh - 70px);">
+                            <div class="mb-5" data-aos="fade-down">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">My Profile</h2>
+                                <p class="text-muted small mb-0">Update your name, email, and business details.</p>
+                            </div>
+
+                            <div class="row g-5">
+                                <div class="col-lg-8" data-aos="fade-right" data-aos-delay="100">
+                                    <div class="premium-card p-4 p-lg-5 position-relative overflow-hidden h-100">
+                                        <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                            <i class="fi fi-rr-circle-user" style="font-size: 8rem;"></i>
+                                        </div>
+
+                                        <div class="position-relative z-1">
+                                            <form action="/auth/profile" method="POST">
+                                                <h5 class="fw-bold mb-4 d-flex align-items-center gap-3 text-main">
+                                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                        style="width: 40px; height: 40px;">
+                                                        <i class="fi fi-rr-user fs-6"></i>
+                                                    </div>
+                                                    Personal Details
+                                                </h5>
+
+                                                <div class="row g-4">
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Full
+                                                            Name</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-member-search"></i></span>
+                                                            <input type="text" name="name"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= user.name %>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Phone
+                                                            Number</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-alt border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-smartphone"></i></span>
+                                                            <input type="text" name="mobile"
+                                                                class="form-control bg-alt border-0 ps-2 fs-6 tracking-wide text-dim"
+                                                                value="<%= user.mobile %>" required readonly
+                                                                title="Phone number cannot be changed here">
+                                                            <span
+                                                                class="input-group-text bg-alt border-0 text-success pe-4"><i
+                                                                    class="fi fi-rr-badge-check"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Email
+                                                            Address</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-envelope"></i></span>
+                                                            <input type="email" name="email"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= user.email %>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Business
+                                                            Name</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-briefcase"></i></span>
+                                                            <input type="text" name="company"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= user.company %>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Business
+                                                            Address</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4 pt-3 align-items-start"><i
+                                                                    class="fi fi-rr-marker"></i></span>
+                                                            <textarea name="location"
+                                                                class="form-control border-0 ps-2 pt-3 fs-6 tracking-wide"
+                                                                rows="3"><%= user.location %></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mt-5 pt-3 border-top border-light">
+                                                        <button type="submit"
+                                                            class="btn btn-primary px-5 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex align-items-center flex-nowrap gap-2 transition-all d-inline-flex">
+                                                            <i class="fi fi-rr-disk"></i> Save Details
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4" data-aos="fade-left" data-aos-delay="200">
+                                    <div
+                                        class="premium-card p-4 p-lg-5 h-100 border border-success border-opacity-25 bg-success bg-opacity-5 relative overflow-hidden">
+
+                                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center mb-4 shadow-sm"
+                                            style="width: 56px; height: 56px; font-size: 1.5rem;">
+                                            <i class="fi fi-rr-shield-check"></i>
+                                        </div>
+
+                                        <h5 class="fw-bold text-main mb-2">Verification Status</h5>
+                                        <p class="small text-muted mb-4">Your account is fully verified and ready to
+                                            accept payments.</p>
+
+                                        <div class="d-flex flex-column gap-4">
+                                            <div
+                                                class="bg-white p-3 rounded-4 shadow-sm border border-light d-flex align-items-center justify-content-between transition-all hover-border-success">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center"
+                                                        style="width: 36px; height: 36px;">
+                                                        <i class="fi fi-rr-id-badge"></i>
+                                                    </div>
+                                                    <div>
+                                                        <span class="text-main small fw-bold d-block mb-1">KYC
+                                                            Check</span>
+                                                        <span
+                                                            class="badge bg-success text-white rounded-pill px-2 py-1 extra-small fw-bold tracking-widest shadow-sm">VERIFIED</span>
+                                                    </div>
+                                                </div>
+                                                <i class="fi fi-rr-check-circle text-success fs-4"></i>
+                                            </div>
+
+                                            <div
+                                                class="bg-white p-4 rounded-4 shadow-sm border border-light transition-all hover-border-primary">
+                                                <span
+                                                    class="text-dim extra-small fw-bold tracking-widest uppercase mb-3 d-flex align-items-center gap-2">
+                                                    <i class="fi fi-rr-file-invoice-dollar text-primary"></i> Tax
+                                                    Details
+                                                </span>
+                                                <div class="d-flex flex-column gap-3">
+                                                    <div
+                                                        class="d-flex align-items-center justify-content-between p-2 bg-alt rounded-3 border border-light">
+                                                        <span class="extra-small text-dim fw-bold ps-2">PAN Card</span>
+                                                        <span
+                                                            class="text-main fw-bold font-monospace small bg-white px-2 py-1 rounded shadow-sm border border-light">
+                                                            <%= user.pan || 'NA' %>
+                                                        </span>
+                                                    </div>
+                                                    <div
+                                                        class="d-flex align-items-center justify-content-between p-2 bg-alt rounded-3 border border-light">
+                                                        <span class="extra-small text-dim fw-bold ps-2">Aadhaar</span>
+                                                        <span
+                                                            class="text-main fw-bold font-monospace small bg-white px-2 py-1 rounded shadow-sm border border-light">
+                                                            <%= user.aadhaar || 'NA' %>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

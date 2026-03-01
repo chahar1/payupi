@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Dashboard</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <!-- Dashboard Feed -->
+                        <div class="px-4 py-4">
+                            <!-- Welcome -->
+                            <div class="d-flex align-items-center justify-content-between mb-5" data-aos="fade-down">
+                                <div>
+                                    <h2 class="fw-bold mb-1 tracking-tight text-main">Namaste, <%= user.name.split(' ')[0] %> 👋</h2>
+                        <p class="text-muted small mb-0">Here' s a summary of your fintech empire today.</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <a href="/auth/transactions" class="btn btn-alt px-4 py-2 rounded-4 shadow-sm">
+                                        <i class="fi fi-rr-chart-pie-alt me-2"></i> Reports
+                                    </a>
+                                    <a href="/auth/payment_link" class="btn btn-premium px-4 py-2 rounded-4 shadow-sm">
+                                        <i class="fi fi-rr-plus me-2"></i> Create Link
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Metrics Grid -->
+                            <div class="row g-4 mb-5">
+                                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="metric-card">
+                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                            <div class="metric-icon bg-success bg-opacity-10 text-success">
+                                                <i class="fi fi-rr-bank"></i>
+                                            </div>
+                                            <span class="badge-premium badge-success shadow-sm">Verified</span>
+                                        </div>
+                                        <p class="extra-small fw-bold text-dim uppercase tracking-widest mb-1">Today's
+                                            Revenue</p>
+                                        <h3 class="fw-bold mb-0 text-main">₹<%=
+                                                totalSuccessAmount.toLocaleString('en-IN', {minimumFractionDigits: 2})
+                                                %>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="metric-card">
+                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                            <div class="metric-icon bg-primary bg-opacity-10 text-primary">
+                                                <i class="fi fi-rr-shopping-cart"></i>
+                                            </div>
+                                            <span class="badge-premium badge-info shadow-sm">
+                                                <%= totalPaymentsCount %> Orders
+                                            </span>
+                                        </div>
+                                        <p class="extra-small fw-bold text-dim uppercase tracking-widest mb-1">Total
+                                            Orders</p>
+                                        <h3 class="fw-bold mb-0 text-main">
+                                            <%= totalPaymentsCount %>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="metric-card">
+                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                            <div class="metric-icon bg-warning bg-opacity-10 text-warning">
+                                                <i class="fi fi-rr-hourglass"></i>
+                                            </div>
+                                            <span class="badge-premium badge-warning shadow-sm">Pending</span>
+                                        </div>
+                                        <p class="extra-small fw-bold text-dim uppercase tracking-widest mb-1">Unpaid
+                                            Dues</p>
+                                        <h3 class="fw-bold mb-0 text-main">₹<%=
+                                                totalPendingAmount.toLocaleString('en-IN', {minimumFractionDigits: 2})
+                                                %>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                                    <div class="metric-card bg-primary bg-gradient border-0 text-white shadow-lg">
+                                        <div class="d-flex align-items-center justify-content-between mb-4">
+                                            <div class="metric-icon bg-white bg-opacity-20 text-white">
+                                                <i class="fi fi-rr-shield-check text-danger"></i>
+                                            </div>
+                                            <span class="badge-premium bg-white bg-opacity-20 text-danger border-0">
+                                                <%= isActive %>
+                                            </span>
+                                        </div>
+                                        <p
+                                            class="extra-small fw-bold text-white text-opacity-75 uppercase tracking-widest mb-1">
+                                            Membership</p>
+                                        <h4 class="fw-bold mb-0 text-white">
+                                            <%= isActive %> Account
+                                        </h4>
+                                        <p class="extra-small text-white text-opacity-75 mb-0 mt-1">Ends: <%= new
+                                                Date(expiry).toLocaleDateString('en-GB', { day: '2-digit' ,
+                                                month: 'short' , year: 'numeric' }) %>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-4">
+                                <!-- Analytics -->
+                                <div class="col-lg-8" data-aos="fade-right">
+                                    <div class="premium-card p-4 p-lg-5">
+                                        <div class="d-flex align-items-center justify-content-between mb-5">
+                                            <div>
+                                                <h5 class="fw-bold text-main mb-1">Revenue Performance</h5>
+                                                <p class="extra-small text-muted mb-0">Total successful collections in
+                                                    the last 7 days.</p>
+                                            </div>
+                                            <div class="p-2 bg-alt rounded-3 border border-dashed">
+                                                <i class="fi fi-rr-stats text-primary"></i>
+                                            </div>
+                                        </div>
+                                        <div style="height: 350px;">
+                                            <canvas id="revenueChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Side Links -->
+                                <div class="col-lg-4" data-aos="fade-left">
+                                    <div class="premium-card p-4 p-lg-5 h-100 bg-alt bg-opacity-50">
+                                        <h6 class="fw-bold text-main mb-4 uppercase tracking-widest small">Instant
+                                            Actions</h6>
+                                        <div class="d-flex flex-column gap-3">
+                                            <a href="/auth/payment_link"
+                                                class="btn btn-alt d-flex align-items-center justify-content-between p-3 rounded-4 shadow-sm border-0 bg-white">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="p-2 bg-primary bg-opacity-10 text-primary rounded-3"><i
+                                                            class="fi fi-rr-link"></i></div>
+                                                    <span class="small fw-bold text-main">New Payment Link</span>
+                                                </div>
+                                                <i class="fi fi-rr-arrow-small-right text-dim"></i>
+                                            </a>
+                                            <a href="/auth/transactions"
+                                                class="btn btn-alt d-flex align-items-center justify-content-between p-3 rounded-4 shadow-sm border-0 bg-white">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="p-2 bg-success bg-opacity-10 text-success rounded-3"><i
+                                                            class="fi fi-rr-chart-line-up"></i></div>
+                                                    <span class="small fw-bold text-main">Ledger Reports</span>
+                                                </div>
+                                                <i class="fi fi-rr-arrow-small-right text-dim"></i>
+                                            </a>
+                                            <a href="/auth/apidetails"
+                                                class="btn btn-alt d-flex align-items-center justify-content-between p-3 rounded-4 shadow-sm border-0 bg-white">
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="p-2 bg-info bg-opacity-10 text-info rounded-3"><i
+                                                            class="fi fi-rr-key"></i></div>
+                                                    <span class="small fw-bold text-main">Manage API Keys</span>
+                                                </div>
+                                                <i class="fi fi-rr-arrow-small-right text-dim"></i>
+                                            </a>
+                                        </div>
+
+                                        <div
+                                            class="mt-5 p-4 rounded-4 bg-primary bg-gradient text-white position-relative overflow-hidden shadow-lg border-0">
+                                            <div class="position-relative z-1">
+                                                <p
+                                                    class="extra-small fw-bold tracking-widest mb-2 uppercase text-white text-opacity-75">
+                                                    Finance Tip</p>
+                                                <p class="small mb-0">Collect payments instantly using UPI by sharing QR
+                                                    codes from your dashboard settings.</p>
+                                            </div>
+                                            <i
+                                                class="fi fi-rr-bulb fs-1 position-absolute end-0 bottom-0 mb-n3 me-n2 opacity-10"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+
+        <!-- Chart Script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                if (typeof Chart !== 'undefined') {
+                    const ctx = document.getElementById('revenueChart').getContext('2d');
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, 'rgba(79, 70, 229, 0.4)');
+                    gradient.addColorStop(1, 'rgba(79, 70, 229, 0)');
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: <% - analyticsLabels %>,
+                            datasets: [{
+                                label: 'Revenue (₹)',
+                                data: <% - analyticsData %> ,
+                                borderColor: '#4f46e5',
+                                backgroundColor: gradient,
+                                borderWidth: 3,
+                                fill: true,
+                                tension: 0.4,
+                                pointBackgroundColor: '#4f46e5',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 5,
+                                pointHoverRadius: 7
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    grid: { color: 'rgba(0,0,0,0.05)' },
+                                    ticks: { font: { family: 'Inter', size: 11 } }
+                                },
+                                x: {
+                                    grid: { display: false },
+                                    ticks: { font: { family: 'Inter', size: 11 } }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        </script>
+
+        <%- include('../partials/footer') %>
+</body>
+
+</html>

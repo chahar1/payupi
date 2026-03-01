@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>About Us - Paybilupi</title>
+</head>
+
+<body class="bg-mesh font-outfit d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-light py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 36px; height: 36px;">
+                    <i class="fi fi-rr-wallet fs-5 mt-1"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight text-main">Paybilupi</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/auth/login" class="btn btn-alt px-4 rounded-pill fw-semibold shadow-sm d-none d-sm-block">Sign
+                    In</a>
+                <a href="/auth/register" class="btn btn-premium px-4 rounded-pill fw-semibold shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 my-5 flex-grow-1">
+        <div class="row mb-5 pb-4">
+            <div class="col-lg-8 mx-auto text-center" data-aos="fade-up">
+                <div
+                    class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 fw-bold mb-3 uppercase tracking-widest">
+                    Our Story</div>
+                <h1 class="display-4 fw-bold text-main mb-4">Democratizing Digital Payments</h1>
+                <p class="fs-5 text-muted" style="line-height: 1.8;">Paybilupi was born from a simple observation:
+                    accepting digital payments in India was still too complex and too expensive for the average business
+                    owner. We set out to change that.</p>
+            </div>
+        </div>
+
+        <div class="row g-5 align-items-center mb-5 pb-5">
+            <div class="col-lg-6" data-aos="fade-right">
+                <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&q=80&w=800"
+                    class="img-fluid rounded-4 shadow-lg" alt="Team collaborating">
+            </div>
+            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
+                <h2 class="fw-bold text-main mb-4">Our Mission</h2>
+                <p class="text-muted mb-4" style="line-height: 1.8;">Our mission is to empower millions of Indian
+                    merchants by providing them with a robust, zero-fee payment infrastructure. We believe that
+                    technology should be a bridge to economic growth, not a tollbooth. By leveraging existing UPI
+                    frameworks and smart technology, we bypass traditional banking rent-seekers to pass 100% of the
+                    value directly to the business owner.</p>
+
+                <h2 class="fw-bold text-main mb-4 mt-5">The Vision</h2>
+                <p class="text-muted" style="line-height: 1.8;">We envision a frictionless economy where launching a
+                    digital business takes minutes, not days. We are building the tools that will power the next
+                    generation of internet commerce in India—starting with the most fundamental piece: getting paid.</p>
+            </div>
+        </div>
+
+        <div class="row g-4 mt-5">
+            <div class="col-12 text-center mb-4">
+                <h3 class="fw-bold text-main">Our Core Values</h3>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="premium-card p-4 h-100 text-center">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                        style="width: 56px; height: 56px;">
+                        <i class="fi fi-rr-shield-check fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-main">Merchant First</h5>
+                    <p class="text-muted small mb-0">Every feature we build is designed to protect our merchants'
+                        margins and save them time.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="premium-card p-4 h-100 text-center">
+                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                        style="width: 56px; height: 56px;">
+                        <i class="fi fi-rr-rocket-lunch fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-main">Radical Transparency</h5>
+                    <p class="text-muted small mb-0">No hidden fees, no complex pricing tiers. What you see is exactly
+                        what you get.</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="premium-card p-4 h-100 text-center">
+                    <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                        style="width: 56px; height: 56px;">
+                        <i class="fi fi-rr-settings-sliders fs-4"></i>
+                    </div>
+                    <h5 class="fw-bold text-main">Engineering Excellence</h5>
+                    <p class="text-muted small mb-0">We build incredibly reliable, scalable systems because your money
+                        demands nothing less.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

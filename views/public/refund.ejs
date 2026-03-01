@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Refund Policy - Paybilupi</title>
+</head>
+
+<body class="bg-mesh font-outfit d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-light py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 36px; height: 36px;">
+                    <i class="fi fi-rr-wallet fs-5 mt-1"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight text-main">Paybilupi</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/auth/login" class="btn btn-alt px-4 rounded-pill fw-semibold shadow-sm d-none d-sm-block">Sign
+                    In</a>
+                <a href="/auth/register" class="btn btn-premium px-4 rounded-pill fw-semibold shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="mb-5 border-bottom border-light pb-4" data-aos="fade-up">
+                    <h1 class="display-5 fw-bold text-main mb-3">Cancellation & Refund Policy</h1>
+                    <p class="text-muted mb-0">Clear guidelines for subscriptions and consumer transactions.</p>
+                </div>
+
+                <div class="premium-card p-4 p-md-5" data-aos="fade-up" data-aos-delay="100">
+                    <div class="alert alert-primary bg-primary bg-opacity-10 border-0 mb-5 text-primary text-center">
+                        <i class="fi fi-rr-info fs-4 d-block mb-2"></i>
+                        <p class="mb-0 fw-semibold">Note: Paybilupi operates as a SaaS routing platform, not a bank. The
+                            following policy governs payments made directly to Paybilupi for our software services, NOT
+                            payments made between consumers and merchants utilizing our API links.</p>
+                    </div>
+
+                    <h4 class="fw-bold text-main mb-3">1. Refund Policy for SaaS Subscriptions</h4>
+                    <p class="text-muted mb-4">Paybilupi offers a completely free core tier. However, for merchants
+                        upgrading to our Premium or Enterprise subscription plans (which may include features like
+                        priority support or advanced routing configuration):</p>
+                    <ul class="text-muted mb-5" style="line-height: 1.8;">
+                        <li><strong>14-Day Money-Back Guarantee:</strong> If you are unhappy with a premium subscription
+                            within the first 14 days of upgrade, you may request a full, no-questions-asked refund by
+                            generating a ticket in the Support dashboard.</li>
+                        <li>Refunds requested after the 14-day window will be evaluated on a pro-rata basis at the sole
+                            discretion of the Paybilupi billing department.</li>
+                        <li>Payments for one-time setup fees or custom development (Enterprise SLA) are strictly
+                            non-refundable once engineering work has commenced.</li>
+                    </ul>
+
+                    <h4 class="fw-bold text-main mb-3">2. Processing Consumer Refunds</h4>
+                    <p class="text-muted mb-4">Because Paybilupi routes your transactions directly into your connected
+                        UPI/Wallet accounts (e.g., your personal / business PhonePe instance), the fiat money never
+                        touches our corporate ledgers. Consequently:</p>
+                    <ul class="text-muted mb-5" style="line-height: 1.8;">
+                        <li><strong>Paybilupi cannot initiate refunds to your customers on your behalf.</strong></li>
+                        <li>If a consumer requests a refund for a product purchased from you via a Paybilupi link, you
+                            (the Merchant) must log into your original gateway app (e.g., PhonePe Business) and manually
+                            initiate the reversal to the customer.</li>
+                        <li>We are currently developing API hooks to allow you to command reversals via the Paybilupi
+                            dashboard, but ultimate execution remains dependent on the underlying gateway's policies.
+                        </li>
+                    </ul>
+
+                    <h4 class="fw-bold text-main mb-3">3. Chargebacks and Disputes</h4>
+                    <p class="text-muted mb-5">Merchants are entirely responsible for handling consumer chargebacks.
+                        Since Paybilupi operates with 0% TDR and direct wallet settlement, chargeback disputes will be
+                        raised by the consumer's bank directly against your connected wallet. Paybilupi will provide
+                        transaction metadata logs to assist you in dispute resolution upon request, but assumes no
+                        financial liability for lost chargeback arbitrations.</p>
+
+                    <h4 class="fw-bold text-main mb-3">4. Requesting Cancellations</h4>
+                    <p class="text-muted mb-0">You may cancel your Paybilupi account and revoke our access to your
+                        gateways at any time via the <span class="fw-bold text-main">Settings -> Profile -> Delete
+                            Account</span> flow in the dashboard. Upon deletion, all subscription auto-renewals are
+                        immediately halted.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

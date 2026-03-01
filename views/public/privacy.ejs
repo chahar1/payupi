@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Privacy Policy - Paybilupi</title>
+</head>
+
+<body class="bg-mesh font-outfit d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-light py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 36px; height: 36px;">
+                    <i class="fi fi-rr-wallet fs-5 mt-1"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight text-main">Paybilupi</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/auth/login" class="btn btn-alt px-4 rounded-pill fw-semibold shadow-sm d-none d-sm-block">Sign
+                    In</a>
+                <a href="/auth/register" class="btn btn-premium px-4 rounded-pill fw-semibold shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="mb-5 border-bottom border-light pb-4" data-aos="fade-up">
+                    <h1 class="display-5 fw-bold text-main mb-3">Privacy Policy</h1>
+                    <p class="text-muted mb-0">Last updated: February 28, 2026</p>
+                </div>
+
+                <div class="premium-card p-4 p-md-5" data-aos="fade-up" data-aos-delay="100">
+                    <p class="text-muted mb-5">At Paybilupi, we take your privacy and data security incredibly
+                        seriously. This Privacy Policy outlines the types of personal data we collect, how it is used,
+                        and the steps we take to ensure your data remains protected when you use our payment
+                        orchestration software, mobile applications, and API services (collectively, the "Services").
+                    </p>
+
+                    <h4 class="fw-bold text-main mb-3">1. Information We Collect</h4>
+                    <p class="text-muted mb-3"><strong>Information you provide to us:</strong> When you register for an
+                        account, we collect identifying information such as your name, corporate email address, business
+                        name, and business address.</p>
+                    <p class="text-muted mb-3"><strong>Gateway Credentials:</strong> To facilitate zero-fee routing, we
+                        temporarily process and securely store encrypted metadata linking to external wallets (e.g.,
+                        your PhonePe/Paytm mobile numbers or merchant tokens). <em>We never store consumer banking
+                            passwords or full credit card numbers on our servers.</em></p>
+                    <p class="text-muted mb-5"><strong>Transaction Metadata:</strong> When you generate payment links or
+                        use the API, we log transaction referrers, IP addresses, localized order amounts, and order
+                        statuses to populate your analytics dashboard.</p>
+
+                    <h4 class="fw-bold text-main mb-3">2. How We Use Information</h4>
+                    <ul class="text-muted mb-5" style="line-height: 1.8;">
+                        <li>To provision your merchant account and authenticate API requests.</li>
+                        <li>To route transactions to your connected third-party gateways (PhonePe, Paytm).</li>
+                        <li>To provide analytics, reporting, and webhook callbacks regarding payment statuses.</li>
+                        <li>To detect, prevent, and mitigate fraudulent activity within the ecosystem.</li>
+                        <li>To communicate critical system updates, schema changes, and service announcements.</li>
+                    </ul>
+
+                    <h4 class="fw-bold text-main mb-3">3. Data Sharing and Disclosure</h4>
+                    <p class="text-muted mb-5">Paybilupi is not a data broker. We do not sell your personal data. Data
+                        is only shared with third-party gateway partners explicitly when you initiate a connection
+                        request to them from your dashboard (for example, triggering a PhonePe OTP). We may also
+                        disclose data locally to law enforcement agencies if mandated by a valid, legally-standing
+                        Indian court order.</p>
+
+                    <h4 class="fw-bold text-main mb-3">4. Security Measures</h4>
+                    <p class="text-muted mb-5">All data exchanged between your servers and ours is transmitted over
+                        modern TLS cryptographic protocols (HTTPS). Sensitive database entries, including your gateway
+                        access tokens, are hashed and encrypted at rest utilizing AES-256 standards. However, no
+                        internet-based service can guarantee 100% security against zero-day exploits.</p>
+
+                    <h4 class="fw-bold text-main mb-3">5. Data Retention</h4>
+                    <p class="text-muted mb-5">We retain transaction metadata and account information indefinitely to
+                        support dispute resolution and your historical analytics dashboard unless you explicitly request
+                        account deletion. Upon account deletion, standard transaction logs may be retained for up to 7
+                        years to comply with financial auditing regulations.</p>
+
+                    <h4 class="fw-bold text-main mb-3">6. Cookies and Tracking</h4>
+                    <p class="text-muted mb-5">The Paybilupi dashboard utilizes first-party session cookies exclusively
+                        to maintain your authentication state and secure you against Cross-Site Request Forgery (CSRF).
+                        We do not deploy third-party advertising trackers on the merchant portal.</p>
+
+                    <h4 class="fw-bold text-main mb-3">7. Contact Us</h4>
+                    <p class="text-muted mb-0">If you have any questions or concerns navigating this Privacy Policy or
+                        concerning the handling of your data, please contact our Data Protection Officer immediately at
+                        <a href="mailto:privacy@paybilupi.com"
+                            class="fw-bold text-primary text-decoration-none">privacy@paybilupi.com</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Edit User | Admin</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Edit User</h2>
+                                <p class="text-muted small mb-0">Update merchant details and plan expiry.</p>
+                            </div>
+
+                            <div class="premium-card p-4 p-lg-5">
+                                <form method="POST" action="/auth/edituser">
+                                    <input type="hidden" name="id" value="<%= editingUser.id %>">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">Full
+                                                Name</label>
+                                            <input type="text" name="name" class="form-control-premium w-100"
+                                                value="<%= editingUser.name %>" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">Email
+                                                Address</label>
+                                            <input type="email" name="email" class="form-control-premium w-100"
+                                                value="<%= editingUser.email %>" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">Mobile
+                                                Number</label>
+                                            <input type="text" name="mobile" class="form-control-premium w-100"
+                                                value="<%= editingUser.mobile %>" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">Business
+                                                Name</label>
+                                            <input type="text" name="company" class="form-control-premium w-100"
+                                                value="<%= editingUser.company %>" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">Expiry
+                                                Date</label>
+                                            <input type="date" name="expiry" class="form-control-premium w-100"
+                                                value="<%= editingUser.expiry ? new Date(editingUser.expiry).toISOString().split('T')[0] : '' %>"
+                                                required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">PAN
+                                                Number</label>
+                                            <input type="text" name="pan" class="form-control-premium w-100"
+                                                value="<%= editingUser.pan %>" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label
+                                                class="field-label extra-small fw-bold text-dim uppercase mb-2 d-block">Aadhaar
+                                                Number</label>
+                                            <input type="text" name="aadhaar" class="form-control-premium w-100"
+                                                value="<%= editingUser.aadhaar %>" required>
+                                        </div>
+                                        <div class="col-12 mt-4 text-end">
+                                            <button type="submit"
+                                                class="btn btn-premium px-5 py-3 shadow-sm rounded-3">Update
+                                                User</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

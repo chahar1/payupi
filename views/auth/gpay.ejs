@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+
+    <body class="bg-mesh">
+        <div class="container-fluid p-0">
+            <div class="row g-0 justify-content-center align-items-center vh-100">
+                <div class="col-md-5 fade-in">
+                    <div class="premium-card p-4 p-lg-5">
+                        <div class="text-center mb-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle mb-3"
+                                style="width: 64px; height: 64px;">
+                                <i class="fab fa-google text-primary fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold text-main mb-1">Verify Google Pay</h4>
+                            <p class="text-muted small">Connect your GPay merchant account</p>
+                        </div>
+
+                        <form method="POST" action="/auth/gpay">
+                            <div class="mb-3">
+                                <label for="number"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Mobile
+                                    Number</label>
+                                <input type="number" name="number" id="number" placeholder="Enter Mobile Number"
+                                    value="<%= merchant ? merchant.gpay_number : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="UPI"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Google Pay
+                                    UPI ID</label>
+                                <input type="text" name="UPI" id="UPI" placeholder="e.g. merchant@okaxis"
+                                    value="<%= merchant ? merchant.gpay_upi_id : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-premium py-3">Verify & Connect</button>
+                                <a href="/auth/connect_merchant"
+                                    class="btn btn-link text-muted text-decoration-none small">Go Back</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/footer') %>
+    </body>
+
+    </html>

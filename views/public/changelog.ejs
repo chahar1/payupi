@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Changelog - Paybilupi</title>
+</head>
+
+<body class="bg-mesh font-outfit d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-light py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 36px; height: 36px;">
+                    <i class="fi fi-rr-wallet fs-5 mt-1"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight text-main">Paybilupi</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/auth/login" class="btn btn-alt px-4 rounded-pill fw-semibold shadow-sm d-none d-sm-block">Sign
+                    In</a>
+                <a href="/auth/register" class="btn btn-premium px-4 rounded-pill fw-semibold shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container py-5 my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="text-center mb-5">
+                    <h1 class="display-4 fw-bold text-main mb-3">Changelog</h1>
+                    <p class="fs-5 text-muted">Keep up with the latest updates and improvements.</p>
+                </div>
+                <div class="premium-card p-4 p-md-5">
+                    <div class="py-3 border-start border-primary border-4 ps-4 mb-4">
+                        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill mb-2">v2.1.0 •
+                            Today</span>
+                        <h5 class="fw-bold text-main mb-2">Node.js Migration & Premium Redesign</h5>
+                        <p class="text-muted small mb-0">Entire infrastructure ported from PHP to an ultra-fast
+                            Node.js/Express environment, coupled with a completely new glassmorphic UI system.</p>
+                    </div>
+                    <div class="py-3 border-start border-light border-4 ps-4 mb-4">
+                        <span class="badge bg-light text-muted rounded-pill border border-light mb-2">v2.0.0 • Last
+                            Month</span>
+                        <h5 class="fw-bold text-main mb-2">Unified Dashboard Release</h5>
+                        <p class="text-muted small mb-0">Launched the unified dashboard for multi-gateway connections
+                            featuring instant PhonePe and Paytm onboarding.</p>
+                    </div>
+                    <div class="text-center mt-5">
+                        <a href="/" class="btn btn-primary px-4 rounded-pill">Return Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

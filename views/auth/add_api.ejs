@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Email Settings | Admin</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Email Notification Settings</h2>
+                                <p class="text-muted small mb-0">Set up how the system sends emails to your users.</p>
+                            </div>
+
+                            <div class="row g-5">
+                                <div class="col-lg-8 slide-up">
+                                    <div class="premium-card p-4 p-lg-5 position-relative overflow-hidden">
+                                        <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                            <i class="fi fi-rr-envelope-open-text" style="font-size: 8rem;"></i>
+                                        </div>
+                                        <form action="/auth/add_api" method="POST" class="position-relative z-1">
+                                            <h5 class="fw-bold mb-5 d-flex align-items-center gap-3 text-main">
+                                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                    style="width: 40px; height: 40px;">
+                                                    <i class="fi fi-rr-envelope fs-6"></i>
+                                                </div>
+                                                SMTP Server Details
+                                            </h5>
+                                            <div class="row g-4">
+                                                <div class="col-md-6">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">SMTP
+                                                        Host</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-globe"></i></span>
+                                                        <input type="text" name="host"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide font-monospace text-muted"
+                                                            value="<%= mail ? mail.host : '' %>"
+                                                            placeholder="smtp.example.com" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">SMTP
+                                                        Port</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-plug"></i></span>
+                                                        <input type="number" name="port"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide font-monospace text-muted"
+                                                            value="<%= mail ? mail.port : '' %>" placeholder="587"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-5 pt-3 border-top border-light">
+                                                    <h6
+                                                        class="fw-bold mb-4 font-monospace small text-dim uppercase tracking-widest">
+                                                        <i class="fi fi-rr-lock me-2 text-primary"></i> Authentication
+                                                        Information</h6>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">SMTP
+                                                        Email</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-at"></i></span>
+                                                        <input type="email" name="sender_email"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                            value="<%= mail ? mail.sender_email : '' %>"
+                                                            placeholder="noreply@domain.com" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Email
+                                                        Password</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-key"></i></span>
+                                                        <input type="password" name="pass"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                            value="<%= mail ? mail.pass : '' %>" placeholder="•••••••••"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Sender
+                                                        Display Name</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-id-badge"></i></span>
+                                                        <input type="text" name="sender_name"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                            value="<%= mail ? mail.sender_name : '' %>"
+                                                            placeholder="Paybilupi Support" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-5 pt-3 d-flex align-items-center gap-3">
+                                                    <button type="submit"
+                                                        class="btn btn-primary px-5 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex justify-content-center align-items-center gap-2 transition-all">
+                                                        <i class="fi fi-rr-disk"></i> Save Configuration
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

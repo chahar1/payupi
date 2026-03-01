@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Terms of Service - Paybilupi</title>
+</head>
+
+<body class="bg-mesh font-outfit d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-light py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 36px; height: 36px;">
+                    <i class="fi fi-rr-wallet fs-5 mt-1"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight text-main">Paybilupi</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/auth/login" class="btn btn-alt px-4 rounded-pill fw-semibold shadow-sm d-none d-sm-block">Sign
+                    In</a>
+                <a href="/auth/register" class="btn btn-premium px-4 rounded-pill fw-semibold shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 my-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="mb-5 border-bottom border-light pb-4" data-aos="fade-up">
+                    <h1 class="display-5 fw-bold text-main mb-3">Terms of Service</h1>
+                    <p class="text-muted mb-0">Effective Date: February 28, 2026</p>
+                </div>
+
+                <div class="premium-card p-4 p-md-5" data-aos="fade-up" data-aos-delay="100">
+                    <p class="text-muted mb-5">Welcome to Paybilupi. By accessing or using our websites, software APIs,
+                        and merchant dashboards (collectively, the "Platform"), you acknowledge that you have read,
+                        understood, and agreed to be legally bound by these Terms of Service. If you do not agree, you
+                        must immediately cease all usage of the Platform.</p>
+
+                    <h4 class="fw-bold text-main mb-3">1. Nature of the Service</h4>
+                    <p class="text-muted mb-4">Paybilupi provides software infrastructure allowing merchants to
+                        orchestrate, create links for, and manage digital payments using third-party wallets and
+                        gateways. <strong>Crucially, Paybilupi is an overarching technical layer and NOT a bank, payment
+                            aggregator, or financial institution.</strong> We do not hold, process, or transfer the
+                        underlying fiat currency. All monetary transfers happen directly between the consumer's bank and
+                        the merchant's connected gateway.</p>
+
+                    <h4 class="fw-bold text-main mb-3">2. Account Registration</h4>
+                    <p class="text-muted mb-4">To use the Platform, you must register for an account providing accurate,
+                        current, and complete information. You are strictly responsible for maintaining the
+                        confidentiality of your API keys and account passwords. You must notify us immediately of any
+                        unauthorized use or security breaches.</p>
+
+                    <h4 class="fw-bold text-main mb-3">3. Acceptable Use Policy</h4>
+                    <p class="text-muted mb-4">You agree not to use the Paybilupi Platform to facilitate any illegal
+                        transactions, including but not limited to: sales of narcotics, illicit firearms, unlicensed
+                        gambling, mature content deemed illegal by local jurisdiction, or coordinated financial fraud.
+                        We reserve the right to instantaneously suspend or terminate accounts suspected of violating
+                        these terms without prior notice.</p>
+
+                    <h4 class="fw-bold text-main mb-3">4. Gateway Connections & Uptime</h4>
+                    <p class="text-muted mb-4">You assume all liability for complying with the Terms of Service of the
+                        underlying gateways you connect to Paybilupi (e.g., PhonePe, Paytm). Paybilupi guarantees 99.9%
+                        uptime for our core API and routing logic; however, we are not liable for transaction failures
+                        caused by downtime or API rate-limiting originating from the third-party gateway providers.</p>
+
+                    <h4 class="fw-bold text-main mb-3">5. Intellectual Property</h4>
+                    <p class="text-muted mb-4">The Platform, including all code, UI designs, documentation, and the
+                        Paybilupi brand identity, are the intellectual property of Paybilupi Technologies. We grant you
+                        a limited, non-transferable, revocable license to use our API strictly to integrate checkout
+                        flows into your business applications.</p>
+
+                    <h4 class="fw-bold text-main mb-3">6. Limitation of Liability</h4>
+                    <p class="text-muted mb-4">To the maximum extent permitted by applicable law, Paybilupi shall not be
+                        liable for any indirect, incidental, special, consequential, or punitive damages, including
+                        without limitation, loss of profits, data, use, or goodwill, resulting from your access to or
+                        inability to access the Platform, or the conduct of any third party (including payment
+                        bottlenecks by connected gateways).</p>
+
+                    <h4 class="fw-bold text-main mb-3">7. Modifications to Terms</h4>
+                    <p class="text-muted mb-0">We reserve the right to modify these Terms at any time. Material changes
+                        will be communicated via the dashboard or email prior to taking effect. Your continued use of
+                        the Platform after changes signify your acceptance of the new Terms.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

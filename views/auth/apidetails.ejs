@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Developer Settings | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5" style="min-height: calc(100vh - 70px);">
+                            <div class="mb-5" data-aos="fade-down">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Developer Settings</h2>
+                                <p class="text-muted small mb-0">Manage API keys and webhook configurations for your
+                                    integration.</p>
+                            </div>
+
+                            <div class="row g-5">
+                                <div class="col-lg-7">
+                                    <div class="premium-card p-4 p-lg-5 mb-5 position-relative overflow-hidden"
+                                        data-aos="fade-up" data-aos-delay="100">
+                                        <!-- Decorative Background -->
+                                        <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                            <i class="fi fi-rr-key" style="font-size: 8rem;"></i>
+                                        </div>
+
+                                        <div class="position-relative z-1">
+                                            <div class="d-flex align-items-center justify-content-between mb-5">
+                                                <h5 class="fw-bold text-main mb-0">API Credentials</h5>
+                                                <span
+                                                    class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill shadow-sm fw-bold">Active</span>
+                                            </div>
+
+                                            <div class="mb-5">
+                                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                                    <label
+                                                        class="extra-small fw-bold text-dim uppercase tracking-widest mb-0">Merchant
+                                                        ID</label>
+                                                </div>
+                                                <div
+                                                    class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                    <span class="input-group-text bg-alt border-0 text-muted ps-4"><i
+                                                            class="fi fi-rr-id-badge"></i></span>
+                                                    <input type="text"
+                                                        class="form-control border-0 ps-2 fs-6 tracking-wide text-primary fw-bold font-monospace bg-white"
+                                                        value="<%= user.id %>" readonly id="merchantIdInput">
+                                                    <button
+                                                        class="btn btn-white border-0 text-muted px-4 d-flex align-items-center transition-all bg-hover-alt"
+                                                        onclick="navigator.clipboard.writeText('<%= user.id %>'); this.innerHTML='<i class=\'fi fi-rr-check text-success\'></i>'; setTimeout(() => { this.innerHTML='<i class=\'fi fi-rr-copy\'></i>'; }, 2000);"
+                                                        title="Copy ID">
+                                                        <i class="fi fi-rr-copy"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                                    <label
+                                                        class="extra-small fw-bold text-dim uppercase tracking-widest mb-0">Secret
+                                                        API Key</label>
+                                                </div>
+                                                <div
+                                                    class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                    <span class="input-group-text bg-alt border-0 text-muted ps-4"><i
+                                                            class="fi fi-rr-key"></i></span>
+                                                    <input type="password"
+                                                        class="form-control border-0 ps-2 fs-6 tracking-wide text-primary fw-bold font-monospace bg-white"
+                                                        value="<%= user.user_token %>" readonly id="apiKeyInput">
+                                                    <button type="button"
+                                                        class="btn btn-white border-0 text-muted px-3 transition-all bg-hover-alt"
+                                                        onclick="const input = document.getElementById('apiKeyInput'); if(input.type === 'password') { input.type = 'text'; this.innerHTML = '<i class=\'fi fi-rr-eye-crossed\'></i>'; } else { input.type = 'password'; this.innerHTML = '<i class=\'fi fi-rr-eye\'></i>'; }">
+                                                        <i class="fi fi-rr-eye"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-white border-0 text-muted px-4 d-flex align-items-center transition-all bg-hover-alt"
+                                                        onclick="navigator.clipboard.writeText('<%= user.user_token %>'); this.innerHTML='<i class=\'fi fi-rr-check text-success\'></i>'; setTimeout(() => { this.innerHTML='<i class=\'fi fi-rr-copy\'></i>'; }, 2000);"
+                                                        title="Copy API Key">
+                                                        <i class="fi fi-rr-copy"></i>
+                                                    </button>
+                                                </div>
+                                                <div
+                                                    class="mt-3 p-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded-3 d-flex gap-3 align-items-start">
+                                                    <div class="text-danger mt-1"><i
+                                                            class="fi fi-rr-shield-exclamation"></i></div>
+                                                    <div>
+                                                        <p class="small text-danger fw-bold mb-1">Security Warning</p>
+                                                        <p class="extra-small text-danger text-opacity-75 mb-0">Your
+                                                            Secret Key can be used to manage payments. Do not share it
+                                                            publicly, commit it to version control, or expose it in
+                                                            client-side code.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="pt-4 mt-5 border-top border-light">
+                                                <form method="POST" action="/auth/apidetails"
+                                                    onsubmit="return confirm('Are you sure you want to generate a new key? Your old key will stop working immediately.');">
+                                                    <input type="hidden" name="action" value="generate_token">
+                                                    <button type="submit"
+                                                        class="btn btn-alt px-4 py-2 rounded-3 fw-bold text-danger d-flex align-items-center gap-2 border-0 shadow-sm transition-all hover-opacity-75">
+                                                        <i class="fi fi-rr-refresh"></i> Roll API Key
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="premium-card p-4 p-lg-5 position-relative overflow-hidden"
+                                        data-aos="fade-up" data-aos-delay="200">
+                                        <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                            <i class="fi fi-rr-code-merge" style="font-size: 8rem;"></i>
+                                        </div>
+                                        <div class="position-relative z-1">
+                                            <h5 class="fw-bold text-main mb-4">Webhook & Integration</h5>
+
+                                            <div class="mb-5">
+                                                <label
+                                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest mb-3">Webhook
+                                                    Notification URL</label>
+                                                <form method="POST" action="/auth/apidetails">
+                                                    <input type="hidden" name="action" value="update_webhook">
+                                                    <div class="d-flex flex-column flex-sm-row gap-2">
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm flex-grow-1">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-link"></i></span>
+                                                            <input type="url" name="webhook_url"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= user.callback_url || '' %>"
+                                                                placeholder="https://yourwebsite.com/webhook">
+                                                        </div>
+                                                        <button type="submit"
+                                                            class="btn btn-primary px-4 rounded-3 shadow-sm fw-bold border-0 whitespace-nowrap">Save
+                                                            URL</button>
+                                                    </div>
+                                                </form>
+                                                <p class="extra-small text-muted mt-3 mb-0">
+                                                    <i class="fi fi-rr-info text-primary me-1"></i> We send real-time
+                                                    `POST` notifications to this endpoint when a payment status changes.
+                                                </p>
+                                            </div>
+
+                                            <div class="mb-2 mt-5">
+                                                <h6 class="fw-bold text-main small uppercase tracking-widest mb-3">API
+                                                    Endpoints</h6>
+
+                                                <div
+                                                    class="bg-alt p-3 rounded-3 border border-light mb-3 d-flex align-items-center justify-content-between transition-all hover-border-primary">
+                                                    <div>
+                                                        <div
+                                                            class="extra-small fw-bold text-dim mb-2 uppercase tracking-widest">
+                                                            Create Order</div>
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span
+                                                                class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 extra-small fw-bold">POST</span>
+                                                            <code
+                                                                class="text-main small fw-bold font-monospace bg-white px-2 py-1 rounded shadow-sm border border-light">http://<%= host %>/api/create-order</code>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button"
+                                                        class="btn btn-white rounded-circle shadow-sm border border-light d-flex align-items-center justify-content-center transition-all bg-hover-alt"
+                                                        style="width: 36px; height: 36px;"
+                                                        onclick="navigator.clipboard.writeText('http://<%= host %>/api/create-order');"><i
+                                                            class="fi fi-rr-copy text-dim m-0"></i></button>
+                                                </div>
+
+                                                <div
+                                                    class="bg-alt p-3 rounded-3 border border-light d-flex align-items-center justify-content-between transition-all hover-border-primary">
+                                                    <div>
+                                                        <div
+                                                            class="extra-small fw-bold text-dim mb-2 uppercase tracking-widest">
+                                                            Check Status</div>
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <span
+                                                                class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1 extra-small fw-bold">POST</span>
+                                                            <code
+                                                                class="text-main small fw-bold font-monospace bg-white px-2 py-1 rounded shadow-sm border border-light">http://<%= host %>/api/check-status</code>
+                                                        </div>
+                                                    </div>
+                                                    <button type="button"
+                                                        class="btn btn-white rounded-circle shadow-sm border border-light d-flex align-items-center justify-content-center transition-all bg-hover-alt"
+                                                        style="width: 36px; height: 36px;"
+                                                        onclick="navigator.clipboard.writeText('http://<%= host %>/api/check-status');"><i
+                                                            class="fi fi-rr-copy text-dim m-0"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5">
+                                    <div class="premium-card p-4 p-lg-5 border border-primary border-opacity-25 h-100"
+                                        data-aos="fade-left" data-aos-delay="300">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center mb-4 text-dim shadow-sm border border-primary border-opacity-25"
+                                            style="width: 56px; height: 56px; font-size: 1.5rem;">
+                                            <i class="fi fi-rr-book-alt"></i>
+                                        </div>
+                                        <h5 class="fw-bold text-main mb-2">Developer Guide</h5>
+                                        <p class="small text-muted mb-5">Integrate Paybilupi seamlessly with our
+                                            comprehensive developer documentation and SDKs.</p>
+
+                                        <div class="d-flex flex-column gap-3">
+                                            <a href="#"
+                                                class="d-flex align-items-center gap-3 p-3 rounded-3 bg-alt hover-bg-light transition-all text-decoration-none border border-light shadow-sm-hover">
+                                                <div class="bg-white text-main rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                    style="width: 40px; height: 40px;">
+                                                    <i class="fi fi-rr-document"></i>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="fw-bold text-main mb-0 small">API Reference</h6>
+                                                    <p class="extra-small text-muted mb-0">Detailed endpoint
+                                                        documentation</p>
+                                                </div>
+                                                <i class="fi fi-rr-angle-right text-dim"></i>
+                                            </a>
+                                            <a href="#"
+                                                class="d-flex align-items-center gap-3 p-3 rounded-3 bg-alt hover-bg-light transition-all text-decoration-none border border-light shadow-sm-hover">
+                                                <div class="bg-white text-main rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                    style="width: 40px; height: 40px;">
+                                                    <i class="fi fi-rr-plug"></i>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="fw-bold text-main mb-0 small">Plugins & SDKs</h6>
+                                                    <p class="extra-small text-muted mb-0">WooCommerce, Node.js, PHP</p>
+                                                </div>
+                                                <i class="fi fi-rr-angle-right text-dim"></i>
+                                            </a>
+                                            <a href="#"
+                                                class="d-flex align-items-center gap-3 p-3 rounded-3 bg-alt hover-bg-light transition-all text-decoration-none border border-light shadow-sm-hover">
+                                                <div class="bg-white text-main rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                    style="width: 40px; height: 40px;">
+                                                    <i class="fi fi-rr-headset"></i>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="fw-bold text-main mb-0 small">Technical Support</h6>
+                                                    <p class="extra-small text-muted mb-0">Get help from our engineers
+                                                    </p>
+                                                </div>
+                                                <i class="fi fi-rr-angle-right text-dim"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

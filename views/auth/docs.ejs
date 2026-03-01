@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Integration Guide | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Integration Guide</h2>
+                                <p class="text-muted small">Connect your application to our UPI payment gateway.</p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="premium-card p-4 p-lg-5 mb-5">
+                                        <div class="mb-5">
+                                            <h5 class="fw-bold text-main mb-4">1. Initiation (Create Order)</h5>
+                                            <p class="small text-muted mb-4">Send a POST request to create a dynamic
+                                                payment link for your customer.</p>
+
+                                            <div class="d-flex align-items-center gap-3 mb-3">
+                                                <span class="badge bg-primary px-3 py-2">POST</span>
+                                                <code
+                                                    class="text-primary fw-bold">http://<%= host %>/api/create-order</code>
+                                            </div>
+
+                                            <div class="table-responsive mb-4">
+                                                <table class="table small">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Parameter</th>
+                                                            <th>Type</th>
+                                                            <th>Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><code>user_token</code></td>
+                                                            <td>String</td>
+                                                            <td>Your Secret API Key</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>amount</code></td>
+                                                            <td>Decimal</td>
+                                                            <td>Amount to charge</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>order_id</code></td>
+                                                            <td>String</td>
+                                                            <td>Unique ID from your system</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><code>customer_mobile</code></td>
+                                                            <td>String</td>
+                                                            <td>Customer's mobile number</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <hr class="my-5 opacity-5">
+
+                                        <div class="mb-5">
+                                            <h5 class="fw-bold text-main mb-4">2. Webhook Notification</h5>
+                                            <p class="small text-muted mb-4">We will send a POST request to your
+                                                Callback URL once payment is verified.</p>
+                                            <div class="bg-dark p-4 rounded-3 text-white shadow-sm">
+                                                <pre class="mb-0 small text-info">
+{
+  "trxId": "ORDER_12345",
+  "amount": "10.00",
+  "status": "1",
+  "utr": "454525454245",
+  "paidOn": "2024-02-26 14:30:00"
+}</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="premium-card p-4">
+                                        <h6 class="fw-bold text-main mb-4">Need Help?</h6>
+                                        <div class="p-3 bg-light rounded-3 mb-3">
+                                            <p class="extra-small mb-1 fw-bold text-primary">QUICK TIPS</p>
+                                            <p class="extra-small text-muted mb-0">Use ₹1.00 for testing to ensure your
+                                                webhook is receiving data correctly.</p>
+                                        </div>
+                                        <a href="/auth/apidetails" class="btn btn-alt w-100 py-2 small fw-bold">View API
+                                            Keys</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

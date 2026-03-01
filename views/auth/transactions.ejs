@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Payment Reports | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5" style="min-height: calc(100vh - 70px);">
+                            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-5 gap-4"
+                                data-aos="fade-down">
+                                <div>
+                                    <h2 class="fw-bold mb-1 tracking-tight text-main">Ledger Reports</h2>
+                                    <p class="text-muted small mb-0">Monitor your transaction history and settlements.
+                                    </p>
+                                </div>
+                                <form action="/auth/transactions" method="GET" class="d-flex gap-2">
+                                    <div class="input-group input-group-lg shadow-sm border border-light rounded-3 overflow-hidden"
+                                        style="max-width: 350px;">
+                                        <span class="input-group-text bg-white border-0 text-dim ps-4">
+                                            <i class="fi fi-rr-search"></i>
+                                        </span>
+                                        <input type="text" name="search"
+                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                            placeholder="Search by Mobile or UTR..." value="<%= search || '' %>">
+                                        <% if (search) { %>
+                                            <a href="/auth/transactions" title="Clear filter"
+                                                class="btn btn-white border-0 text-danger px-3 d-flex align-items-center bg-white bg-hover-light">
+                                                <i class="fi fi-rr-cross-small fs-5"></i>
+                                            </a>
+                                            <% } %>
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-primary px-4 rounded-3 shadow-sm fw-bold">Search</button>
+                                </form>
+                            </div>
+
+                            <div class="premium-card overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                                <div class="table-responsive">
+                                    <table class="table-premium mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="ps-4">ID</th>
+                                                <th>Customer</th>
+                                                <th>Date & Time</th>
+                                                <th>Method</th>
+                                                <th>Reference (UTR)</th>
+                                                <th class="text-end">Amount</th>
+                                                <th class="text-center pe-4">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if (payments && payments.length> 0) { %>
+                                                <% payments.forEach(payment=> { %>
+                                                    <tr class="align-middle transition-all hover-bg-alt">
+                                                        <td class="ps-4">
+                                                            <span
+                                                                class="text-primary fw-bold font-monospace small bg-primary bg-opacity-10 px-2 py-1 rounded-2">#
+                                                                <%= payment.id %></span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex align-items-center gap-3">
+                                                                <div class="bg-alt text-main rounded-circle d-flex align-items-center justify-content-center shadow-sm border"
+                                                                    style="width: 36px; height: 36px; font-size: 0.9rem;">
+                                                                    <i class="fi fi-rr-user"></i>
+                                                                </div>
+                                                                <div>
+                                                                    <span class="small fw-bold text-main d-block">
+                                                                        <%= payment.customer_mobile %>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="small fw-semibold text-main mb-1">
+                                                                <%= new
+                                                                    Date(payment.created_on).toLocaleDateString('en-GB',
+                                                                    { day: '2-digit' , month: 'short' , year: 'numeric'
+                                                                    }) %>
+                                                            </div>
+                                                            <div class="extra-small text-dim">
+                                                                <%= new
+                                                                    Date(payment.created_on).toLocaleTimeString('en-GB',
+                                                                    { hour: '2-digit' , minute: '2-digit' }) %>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="badge-premium badge-info bg-opacity-10 text-info border-0 extra-small shadow-none">
+                                                                <i class="fi fi-rr-apps-sort me-1"></i>
+                                                                <%= payment.method || 'UPI' %>
+                                                            </span>
+                                                        </td>
+                                                        <td class="small font-monospace text-muted text-truncate"
+                                                            style="max-width: 150px;">
+                                                            <%= payment.utr || '-' %>
+                                                        </td>
+                                                        <td class="fw-bold text-main text-end fs-6">
+                                                            ₹<%= parseFloat(payment.amount).toFixed(2) %>
+                                                        </td>
+                                                        <td class="text-center pe-4">
+                                                            <span
+                                                                class="badge-premium <%= (payment.status == '1') ? 'badge-success bg-opacity-10 text-success border-success border-opacity-25' : 'badge-warning bg-opacity-10 text-warning border-warning border-opacity-25' %> extra-small fw-bold">
+                                                                <% if(payment.status=='1' ) { %>
+                                                                    <i class="fi fi-rr-check-circle me-1"></i> Completed
+                                                                    <% } else { %>
+                                                                        <i class="fi fi-rr-time-fast me-1"></i> Pending
+                                                                        <% } %>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+                                                        <% } else { %>
+                                                            <tr>
+                                                                <td colspan="7" class="text-center py-5">
+                                                                    <div
+                                                                        class="d-flex flex-column justify-content-center align-items-center py-5 my-4">
+                                                                        <div class="bg-alt rounded-circle d-flex align-items-center justify-content-center mb-4 text-dim shadow-sm border border-light"
+                                                                            style="width: 80px; height: 80px; font-size: 2rem;">
+                                                                            <i class="fi fi-rr-receipt"></i>
+                                                                        </div>
+                                                                        <h5 class="fw-bold text-main mb-2">No
+                                                                            Transactions Found</h5>
+                                                                        <p class="small text-muted mb-0">It looks like
+                                                                            there are no payments matching this
+                                                                            criteria.</p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

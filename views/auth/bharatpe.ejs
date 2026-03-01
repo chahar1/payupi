@@ -1,0 +1,72 @@
+<%- include('../partials/head') %>
+
+    <body class="bg-mesh">
+        <div class="container-fluid p-0">
+            <div class="row g-0 justify-content-center align-items-center vh-100">
+                <div class="col-md-5 fade-in">
+                    <div class="premium-card p-4 p-lg-5">
+                        <div class="text-center mb-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-warning bg-opacity-10 rounded-circle mb-3"
+                                style="width: 64px; height: 64px;">
+                                <i class="fas fa-store text-warning fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold text-main mb-1">Verify BharatPe</h4>
+                            <p class="text-muted small">Connect your BharatPe merchant account</p>
+                        </div>
+
+                        <form method="POST" action="/auth/bharatpe">
+                            <div class="mb-3">
+                                <label for="MID"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Merchant
+                                    ID</label>
+                                <input type="text" name="MID" id="MID" placeholder="Enter Merchant ID"
+                                    value="<%= merchant ? merchant.bharatpe_merchant_id : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="number"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Mobile
+                                    Number</label>
+                                <input type="number" name="number" id="number" placeholder="Enter Mobile Number"
+                                    value="<%= merchant ? merchant.bharatpe_number : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="upiid"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">BharatPe
+                                    UPI ID</label>
+                                <input type="text" name="upiid" id="upiid" placeholder="e.g. merchant@bharatpe"
+                                    value="<%= merchant ? merchant.bharatpe_upi_id : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="token"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">BharatPe
+                                    Token</label>
+                                <input type="text" name="token" id="token" placeholder="Enter Token"
+                                    value="<%= merchant ? merchant.bharatpe_token : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="cookie"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">BharatPe
+                                    Cookie</label>
+                                <textarea name="cookie" id="cookie" placeholder="Paste your cookie here"
+                                    class="form-control form-control-premium" style="min-height: 80px;"
+                                    required><%= merchant ? merchant.bharatpe_cookie : '' %></textarea>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-premium py-3">Verify & Connect</button>
+                                <a href="/auth/connect_merchant"
+                                    class="btn btn-link text-muted text-decoration-none small">Go Back</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/footer') %>
+    </body>
+
+    </html>

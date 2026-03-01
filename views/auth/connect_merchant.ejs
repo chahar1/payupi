@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Merchant Settings | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <!-- Header -->
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Connect Gateways</h2>
+                                <p class="text-muted small mb-0">Link your payment gateway accounts to start accepting
+                                    payments.</p>
+                            </div>
+
+                            <div class="row g-5">
+                                <div class="col-lg-8 slide-up">
+                                    <div class="premium-card p-4 p-lg-5 mb-5 position-relative overflow-hidden">
+                                        <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                            <i class="fi fi-rr-link" style="font-size: 8rem;"></i>
+                                        </div>
+                                        <form method="POST" action="/auth/connect_merchant"
+                                            class="row g-4 position-relative z-1 align-items-end">
+                                            <input type="hidden" name="action" value="add">
+                                            <h5 class="col-12 fw-bold mb-4 d-flex align-items-center gap-3 text-main">
+                                                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                    style="width: 40px; height: 40px;">
+                                                    <i class="fi fi-rr-plug fs-6"></i>
+                                                </div>
+                                                Link New Account
+                                            </h5>
+
+                                            <div class="col-md-5">
+                                                <label
+                                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Select
+                                                    Gateway</label>
+                                                <div
+                                                    class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                    <span class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                            class="fi fi-rr-apps-sort"></i></span>
+                                                    <select name="merchant_name" id="merchant_name" required
+                                                        class="form-select border-0 ps-2 fs-6 tracking-wide bg-white shadow-none">
+                                                        <option value="">Choose a gateway...</option>
+                                                        <% for (const key in merchantConfigs) { %>
+                                                            <option value="<%= key %>">
+                                                                <%= merchantConfigs[key].nameDisplay %>
+                                                            </option>
+                                                            <% } %>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <label
+                                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Merchant
+                                                    Mobile No.</label>
+                                                <div
+                                                    class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                    <span class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                            class="fi fi-rr-mobile-button"></i></span>
+                                                    <input type="number" name="mobile" id="mobile"
+                                                        class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                        placeholder="9876543210" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <button
+                                                    class="btn btn-primary w-100 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex justify-content-center align-items-center gap-2 transition-all"
+                                                    type="submit">
+                                                    <i class="fi fi-rr-add"></i> Connect
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                        <div
+                                            class="mt-5 p-4 bg-alt bg-opacity-50 rounded-4 border-start border-primary border-4 position-relative z-1 d-flex gap-3 align-items-start">
+                                            <i class="fi fi-rr-info text-primary mt-1"></i>
+                                            <div>
+                                                <p class="mb-1 small fw-bold text-main">Cron Job Setup (PhonePe)</p>
+                                                <p class="mb-0 extra-small text-muted">To keep your connection active,
+                                                    add this URL to your server's Cron Jobs with a 30-minute interval:
+                                                </p>
+                                                <div class="mt-2 d-inline-flex bg-white px-3 py-2 rounded-2 border border-light shadow-sm align-items-center gap-2"
+                                                    onclick="navigator.clipboard.writeText('http://<%= host %>/cron/phonepe?token=<%= user.user_token %>'); alert('Cron URL copied!')">
+                                                    <code class="text-dim font-monospace user-select-all"
+                                                        style="font-size: 0.75rem;">http://<%= host %>/cron/phonepe?token=<%= user.user_token %></code>
+                                                    <i
+                                                        class="fi fi-rr-copy text-muted ms-2 cursor-pointer hover-text-primary transition-all"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Connected Gateways Table -->
+                            <div class="premium-card overflow-hidden">
+                                <div class="px-4 py-3 bg-light border-bottom">
+                                    <h6 class="mb-0 fw-bold text-main">Linked Gateways</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table-premium mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="ps-4">Gateway</th>
+                                                <th>Mobile Number</th>
+                                                <th>Connected On</th>
+                                                <th>Status</th>
+                                                <th>Verification</th>
+                                                <th class="pe-4 text-end">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% let connectedCount=0; for (const key in merchantConfigs) { if (user[key]
+                                                !=='Yes' ) continue; connectedCount++; const
+                                                config=merchantConfigs[key]; const number=(merchant &&
+                                                merchant[config.number]) ? merchant[config.number] : '—' ; const
+                                                connectedOn=(merchant && merchant[config.connectedOn]) ?
+                                                merchant[config.connectedOn] : '—' ; const status=(merchant &&
+                                                merchant[config.status]) ? merchant[config.status] : 'Deactive' ; %>
+                                                <tr>
+                                                    <td class="ps-4 fw-bold text-main">
+                                                        <%= config.nameDisplay %>
+                                                    </td>
+                                                    <td><code class="small"><%= number %></code></td>
+                                                    <td>
+                                                        <%= connectedOn !=='—' ? new
+                                                            Date(connectedOn).toLocaleDateString('en-GB', {
+                                                            day: '2-digit' , month: 'short' , year: 'numeric' }) : '—'
+                                                            %>
+                                                    </td>
+                                                    <td>
+                                                        <span
+                                                            class="badge-premium <%= (status === 'Active' || status === 'Connected') ? 'badge-success' : 'badge-warning' %>">
+                                                            <%= status || 'Inactive' %>
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        <% if (config.verifyAction) { %>
+                                                            <a href="/auth/<%= config.verifyAction %>"
+                                                                class="btn btn-outline-primary btn-sm px-3 rounded-2">Verify
+                                                                Details</a>
+                                                            <% } else { %>
+                                                                <span class="text-muted small">Auto-verified</span>
+                                                                <% } %>
+                                                    </td>
+                                                    <td class="pe-4 text-end">
+                                                        <form method="POST" action="/auth/connect_merchant">
+                                                            <input type="hidden" name="action" value="delete">
+                                                            <input type="hidden" name="colName" value="<%= key %>">
+                                                            <input type="hidden" name="deactivateCol"
+                                                                value="<%= config.deactivateCol %>">
+                                                            <button
+                                                                class="btn btn-link text-danger p-0 small text-decoration-none"
+                                                                type="submit"><i class="fi fi-rr-trash"></i>
+                                                                Remove</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <% if (connectedCount===0) { %>
+                                                        <tr>
+                                                            <td colspan="6" class="text-center py-5 text-muted">No
+                                                                gateways connected yet. Use the form above to add one.
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

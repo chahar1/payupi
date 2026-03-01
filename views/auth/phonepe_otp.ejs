@@ -1,0 +1,51 @@
+<%- include('../partials/head') %>
+
+    <body class="bg-mesh">
+        <div class="container-fluid p-0">
+            <div class="row g-0 justify-content-center align-items-center vh-100">
+                <div class="col-md-5 fade-in">
+                    <div class="premium-card p-4 p-lg-5">
+                        <div class="text-center mb-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded-circle mb-3"
+                                style="width: 64px; height: 64px;">
+                                <i class="fas fa-key text-success fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold text-main mb-1">Verify OTP</h4>
+                            <p class="text-muted small">Enter the 6-digit OTP sent to <%= number %>
+                            </p>
+                        </div>
+
+                        <form method="POST" action="/auth/phonepe_verify">
+                            <div class="mb-3">
+                                <label for="otp"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Enter
+                                    OTP</label>
+                                <input type="number" name="otp" id="otp" placeholder="6-digit OTP"
+                                    class="form-control form-control-premium text-center fs-4 tracking-widest" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="upi"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">PhonePe
+                                    Merchant UPI ID</label>
+                                <input type="text" name="upi" id="upi" placeholder="e.g. mobile@ybl"
+                                    class="form-control form-control-premium" required>
+                            </div>
+
+                            <input type="hidden" name="number" value="<%= number %>">
+                            <input type="hidden" name="token" value="<%= token %>">
+                            <input type="hidden" name="device" value="<%= device %>">
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-premium py-3">Verify & Connect</button>
+                                <a href="/auth/phonepe"
+                                    class="btn btn-link text-muted text-decoration-none small">Resend OTP</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/footer') %>
+    </body>
+
+    </html>

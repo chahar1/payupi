@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Create User | Admin</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Create New User</h2>
+                                <p class="text-muted small mb-0">Manually onboard a new merchant or administrator.</p>
+                            </div>
+
+                            <% if (error) { %>
+                                <div class="alert alert-danger mb-4 rounded-4 shadow-sm">
+                                    <%= error %>
+                                </div>
+                                <% } %>
+
+                                    <div class="row g-5">
+                                        <div class="col-lg-8">
+                                            <div class="premium-card p-4 p-lg-5 position-relative overflow-hidden"
+                                                data-aos="fade-up" data-aos-delay="100">
+                                                <div
+                                                    class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                                    <i class="fi fi-rr-user-add" style="font-size: 8rem;"></i>
+                                                </div>
+
+                                                <form method="POST" action="/auth/add_user"
+                                                    class="position-relative z-1">
+                                                    <h5 class="fw-bold mb-4 d-flex align-items-center gap-3 text-main">
+                                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                            style="width: 40px; height: 40px;">
+                                                            <i class="fi fi-rr-user fs-6"></i>
+                                                        </div>
+                                                        Account Details
+                                                    </h5>
+
+                                                    <div class="row g-4 mb-5">
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Full
+                                                                Name</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-circle-user"></i></span>
+                                                                <input type="text" name="name"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                    placeholder="John Doe" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Account
+                                                                Role</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-key"></i></span>
+                                                                <select name="role"
+                                                                    class="form-select border-0 ps-2 fs-6 tracking-wide bg-white shadow-none"
+                                                                    required>
+                                                                    <option value="User">Merchant (User)</option>
+                                                                    <option value="Admin">Administrator (Admin)</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">WhatsApp
+                                                                Number</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-comment-alt-dots"></i></span>
+                                                                <input type="text" name="mobile"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                    placeholder="9876543210" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Email
+                                                                Address</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-envelope"></i></span>
+                                                                <input type="email" name="email"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                    placeholder="john@example.com" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Password</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-lock"></i></span>
+                                                                <input type="password" name="password"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                    placeholder="••••••••" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Business
+                                                                Name</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-building"></i></span>
+                                                                <input type="text" name="company"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                    placeholder="Acme Inc." required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <h5
+                                                        class="fw-bold mb-4 d-flex align-items-center gap-3 text-main pt-2">
+                                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                            style="width: 40px; height: 40px;">
+                                                            <i class="fi fi-rr-id-badge fs-6"></i>
+                                                        </div>
+                                                        KYC Information
+                                                    </h5>
+
+                                                    <div class="row g-4">
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Aadhaar
+                                                                Number</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-credit-card"></i></span>
+                                                                <input type="text" name="aadhaar"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                    placeholder="1234 5678 9012" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label
+                                                                class="form-label extra-small fw-bold text-dim uppercase tracking-widest">PAN
+                                                                Number</label>
+                                                            <div
+                                                                class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                                <span
+                                                                    class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                        class="fi fi-rr-document"></i></span>
+                                                                <input type="text" name="pan"
+                                                                    class="form-control border-0 ps-2 fs-6 tracking-wide text-uppercase font-monospace"
+                                                                    placeholder="ABCDE1234F" required>
+                                                            </div>
+                                                        </div>
+
+                                                        <div
+                                                            class="col-12 mt-5 pt-3 border-top border-light d-flex align-items-center gap-3">
+                                                            <button type="submit"
+                                                                class="btn btn-primary px-5 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex align-items-center gap-2 transition-all">
+                                                                <i class="fi fi-rr-disk"></i> Complete Registration
+                                                            </button>
+                                                            <a href="/auth/merchant_list"
+                                                                class="btn btn-alt px-4 py-3 rounded-3 text-muted fw-bold d-flex align-items-center gap-2">
+                                                                <i class="fi fi-rr-cross-small"></i> Cancel
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

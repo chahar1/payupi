@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Manage Plans | Admin</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="d-flex align-items-center justify-content-between mb-5">
+                                <div>
+                                    <h2 class="fw-bold mb-1 tracking-tight text-main">Subscription Plans</h2>
+                                    <p class="text-muted small mb-0">Manage and update your platform's pricing tiers.
+                                    </p>
+                                </div>
+                                <% if (!add && !editPlan) { %>
+                                    <a href="/auth/manage_subscription?add=1"
+                                        class="btn btn-premium px-4 py-2 shadow-sm rounded-3">
+                                        <i class="fas fa-plus me-2"></i> Add New Plan
+                                    </a>
+                                    <% } %>
+                            </div>
+
+                            <% if (add || editPlan) { %>
+                                <div class="premium-card p-4 p-lg-5 mb-5 slide-up">
+                                    <h5 class="fw-bold mb-4 text-main d-flex align-items-center gap-3">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                            style="width: 40px; height: 40px;">
+                                            <i class="<%= add ? 'fi fi-rr-plus' : 'fi fi-rr-edit' %> fs-6"></i>
+                                        </div>
+                                        <%= add ? 'Create New Plan' : 'Edit Plan Configuration' %>
+                                    </h5>
+                                    <form method="POST" action="/auth/manage_subscription" class="row g-4 pt-2">
+                                        <input type="hidden" name="action" value="<%= add ? 'add' : 'update' %>">
+                                        <% if (editPlan) { %><input type="hidden" name="srno"
+                                                value="<%= editPlan.id %>">
+                                            <% } %>
+
+                                                <div class="col-md-4">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Plan
+                                                        Name</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-tags"></i></span>
+                                                        <input type="text" name="plan_name"
+                                                            value="<%= editPlan ? editPlan.plan_name : '' %>"
+                                                            placeholder="e.g. PREMIUM"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Amount
+                                                        (INR)</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-indian-rupee-sign"></i></span>
+                                                        <input type="number" name="amount"
+                                                            value="<%= editPlan ? editPlan.amount : '' %>"
+                                                            placeholder="0"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Duration
+                                                        (Months)</label>
+                                                    <div
+                                                        class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                        <span
+                                                            class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                class="fi fi-rr-calendar"></i></span>
+                                                        <input type="number" name="expiry"
+                                                            value="<%= editPlan ? editPlan.expiry : '' %>"
+                                                            placeholder="1"
+                                                            class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-4">
+                                                    <label
+                                                        class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Plan
+                                                        Features (One per line)</label>
+                                                    <div
+                                                        class="border border-light rounded-3 overflow-hidden shadow-sm position-relative">
+                                                        <i class="fi fi-rr-list text-muted position-absolute"
+                                                            style="top: 16px; left: 16px;"></i>
+                                                        <textarea name="features" rows="5"
+                                                            class="form-control border-0 fs-6 tracking-wide"
+                                                            style="padding: 14px 16px 14px 48px; resize: none;" required
+                                                            placeholder="Priority Support&#10;Analytics Dashboard..."><%= editPlan ? editPlan.features : '' %></textarea>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="col-12 mt-5 pt-3 border-top border-light d-flex align-items-center gap-3">
+                                                    <button type="submit"
+                                                        class="btn btn-primary px-5 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex align-items-center gap-2 transition-all">
+                                                        <i class="fi fi-rr-disk"></i>
+                                                        <%= add ? 'Create Plan' : 'Save Changes' %>
+                                                    </button>
+                                                    <a href="/auth/manage_subscription"
+                                                        class="btn btn-alt px-4 py-3 rounded-3 text-muted fw-bold d-flex align-items-center gap-2">
+                                                        <i class="fi fi-rr-cross-small"></i> Cancel
+                                                    </a>
+                                                </div>
+                                    </form>
+                                </div>
+                                <% } %>
+
+                                    <div class="row g-4 pricing" data-aos="fade-up" data-aos-delay="100">
+                                        <% plans.forEach(plan=> { %>
+                                            <div class="col-lg-4">
+                                                <div
+                                                    class="premium-card h-100 p-4 d-flex flex-column position-relative overflow-hidden hover-scale transition-all">
+                                                    <div class="position-absolute top-0 end-0 p-3 opacity-5">
+                                                        <i class="fi fi-rr-star" style="font-size: 6rem;"></i>
+                                                    </div>
+                                                    <div class="text-center mb-4 position-relative z-1 pt-3">
+                                                        <h6
+                                                            class="extra-small fw-bold text-primary uppercase tracking-widest mb-2">
+                                                            <%= plan.plan_name %>
+                                                        </h6>
+                                                        <h2
+                                                            class="fw-bold text-main mb-0 d-flex align-items-center justify-content-center gap-1">
+                                                            <span class="fs-4 text-muted">₹</span>
+                                                            <%= plan.amount %>
+                                                        </h2>
+                                                        <p class="text-muted small mt-1">Billed every <%= plan.expiry %>
+                                                                month(s)</p>
+                                                    </div>
+                                                    <div
+                                                        class="bg-alt bg-opacity-50 p-4 rounded-4 flex-grow-1 position-relative z-1 mb-4">
+                                                        <ul class="list-unstyled mb-0">
+                                                            <% (plan.features || "" ).split('\n').filter(f=>
+                                                                f.trim()).forEach(f => { %>
+                                                                <li
+                                                                    class="mb-3 d-flex align-items-start small text-muted gap-2">
+                                                                    <i
+                                                                        class="fi fi-rr-check-circle text-success mt-1"></i>
+                                                                    <span>
+                                                                        <%= f.trim() %>
+                                                                    </span>
+                                                                </li>
+                                                                <% }) %>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="d-flex gap-2 position-relative z-1 mt-auto">
+                                                        <a href="/auth/manage_subscription?srno=<%= plan.id %>"
+                                                            class="btn btn-alt flex-grow-1 py-3 fw-bold text-primary bg-primary bg-opacity-10 shadow-none d-flex align-items-center justify-content-center gap-2">
+                                                            <i class="fi fi-rr-edit"></i> Edit
+                                                        </a>
+                                                        <a href="/auth/manage_subscription?delete=<%= plan.id %>"
+                                                            class="btn btn-alt text-danger px-4 bg-danger bg-opacity-10 shadow-none d-flex align-items-center justify-content-center"
+                                                            onclick="return confirm('Delete this plan permanently?')">
+                                                            <i class="fi fi-rr-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

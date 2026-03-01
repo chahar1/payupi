@@ -1,0 +1,55 @@
+<%- include('../partials/head') %>
+
+    <body class="bg-mesh">
+        <div class="container-fluid p-0">
+            <div class="row g-0 justify-content-center align-items-center vh-100">
+                <div class="col-md-5 fade-in">
+                    <div class="premium-card p-4 p-lg-5">
+                        <div class="text-center mb-4">
+                            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle mb-3"
+                                style="width: 64px; height: 64px;">
+                                <i class="fas fa-university text-primary fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold text-main mb-1">SBI Merchant Setup</h4>
+                            <p class="text-muted small">Sync your SBI gateway account</p>
+                        </div>
+
+                        <form method="POST" action="/auth/sbi">
+                            <div class="mb-3">
+                                <label for="merchant_username"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">SBI
+                                    Merchant ID</label>
+                                <input type="text" name="merchant_username" id="merchant_username"
+                                    placeholder="Enter ID" value="<%= merchant ? merchant.sbi_merchant_id : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Gateway
+                                    Password</label>
+                                <input type="password" name="password" id="password" placeholder="Enter password"
+                                    class="form-control form-control-premium" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="sbi_number"
+                                    class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Linked
+                                    Mobile Number</label>
+                                <input type="number" name="sbi_number" id="sbi_number" placeholder="Enter mobile"
+                                    value="<%= merchant ? merchant.sbi_number : '' %>"
+                                    class="form-control form-control-premium" required>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-premium py-3">Verify SBI Gateway</button>
+                                <a href="/auth/connect_merchant"
+                                    class="btn btn-link text-muted text-decoration-none small">Go Back</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('../partials/footer') %>
+    </body>
+
+    </html>

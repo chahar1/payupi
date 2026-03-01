@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Upgrade Plan | Paybilupi</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5 fade-in">
+                            <div class="mb-5">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Upgrade Your Plan</h2>
+                                <p class="text-muted small mb-0">Choose a subscription that fits your business needs.
+                                </p>
+                            </div>
+
+                            <div class="row g-4 pricing" data-aos="fade-up" data-aos-delay="100">
+                                <% plans.forEach(plan=> { %>
+                                    <div class="col-lg-4">
+                                        <div
+                                            class="premium-card h-100 p-4 d-flex flex-column position-relative overflow-hidden hover-scale transition-all">
+                                            <div
+                                                class="position-absolute top-0 end-0 p-3 opacity-5 pointer-events-none">
+                                                <i class="fi fi-rr-star" style="font-size: 6rem;"></i>
+                                            </div>
+                                            <div class="text-center mb-4 position-relative z-1 pt-3">
+                                                <h6
+                                                    class="extra-small fw-bold text-primary uppercase tracking-widest mb-2">
+                                                    <%= plan.plan_name %>
+                                                </h6>
+                                                <h2
+                                                    class="fw-bold text-main mb-0 d-flex align-items-center justify-content-center gap-1">
+                                                    <span class="fs-4 text-muted">₹</span>
+                                                    <%= plan.amount %>
+                                                </h2>
+                                                <p class="text-muted small mt-1">Billed every <%= plan.expiry %>
+                                                        month(s)</p>
+                                            </div>
+                                            <div
+                                                class="bg-alt bg-opacity-50 p-4 rounded-4 flex-grow-1 position-relative z-1 mb-4">
+                                                <ul class="list-unstyled mb-0">
+                                                    <% (plan.features || "Standard Gateway Access\nPriority Support"
+                                                        ).split('\n').filter(f=> f.trim()).forEach(f => { %>
+                                                        <li
+                                                            class="mb-3 d-flex align-items-start small text-muted gap-2">
+                                                            <i class="fi fi-rr-check-circle text-success mt-1"></i>
+                                                            <span>
+                                                                <%= f.trim() %>
+                                                            </span>
+                                                        </li>
+                                                        <% }) %>
+                                                </ul>
+                                            </div>
+                                            <form method="POST" action="/auth/upgrade"
+                                                class="position-relative z-1 mt-auto">
+                                                <input type="hidden" name="plan_id" value="<%= plan.id %>">
+                                                <button
+                                                    class="btn btn-premium w-100 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex justify-content-center align-items-center gap-2">
+                                                    <i class="fi fi-rr-rocket-lunch"></i> Subscribe Now
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <% }) %>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

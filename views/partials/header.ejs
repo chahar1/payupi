@@ -1,0 +1,93 @@
+<div class="p-3 d-flex align-items-center justify-content-between sticky-top"
+    style="height: 70px; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.05); z-index: 999;">
+
+    <!-- Mobile Navigation -->
+    <div class="d-md-none">
+        <button class="btn btn-light rounded-3 border-0 p-2 shadow-sm" onclick="$('.sidebar').toggleClass('d-none');">
+            <i class="fi fi-rr-menu-burger text-main"></i>
+        </button>
+    </div>
+
+    <!-- Status Indicator -->
+    <div class="d-none d-md-flex align-items-center gap-2">
+        <div class="status-indicator pe-3 border-end border-light">
+            <span class="status-dot"></span>
+            <span class="status-text fw-semibold">System Active</span>
+        </div>
+        <span class="text-muted small ms-2"><i class="fi fi-rr-calendar me-1"></i>
+            <%= new Date().toLocaleDateString('en-GB', { day: '2-digit' , month: 'short' , year: 'numeric' }) %>
+        </span>
+    </div>
+
+    <!-- User Profile -->
+    <div class="dropdown ms-auto">
+        <a href="#" class="d-flex align-items-center gap-3 text-decoration-none dropdown-toggle no-caret"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="text-end d-none d-sm-block">
+                <p class="mb-0 fw-bold text-main small tracking-tight">
+                    <%= user ? user.name : 'User' %>
+                </p>
+                <p class="mb-0 text-primary text-opacity-75 extra-small uppercase tracking-widest fw-semibold">
+                    <%= user ? user.role : 'Member' %>
+                </p>
+            </div>
+            <div class="avatar bg-primary bg-gradient text-white fw-bold d-flex align-items-center justify-content-center rounded-3 shadow-sm transition-all"
+                style="width: 42px; height: 42px; font-size: 1.1rem;">
+                <%= user ? user.name.charAt(0) : 'U' %>
+            </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-2 mt-3"
+            style="min-width: 220px; border-radius: 16px; animation: dropdownFade 0.2s ease-out;">
+            <li>
+                <div class="px-3 py-2">
+                    <p class="mb-0 small fw-bold text-main">
+                        <%= user ? user.name : 'User' %>
+                    </p>
+                    <p class="mb-0 extra-small text-muted">
+                        <%= user ? user.email : '' %>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <hr class="dropdown-divider opacity-10 my-1">
+            </li>
+            <li><a class="dropdown-item rounded-3 py-2 px-3 mb-1 transition-all" href="/auth/profile"><i
+                        class="fi fi-rr-user me-3 text-dim"></i> My Profile</a></li>
+            <li><a class="dropdown-item rounded-3 py-2 px-3 mb-1 transition-all" href="/auth/apidetails"><i
+                        class="fi fi-rr-key me-3 text-dim"></i> API Keys</a></li>
+            <li>
+                <hr class="dropdown-divider opacity-10 my-1">
+            </li>
+            <li><a class="dropdown-item rounded-3 py-2 px-3 text-danger transition-all" href="/auth/logout"><i
+                        class="fi fi-rr-exit me-3 text-danger text-opacity-75"></i> Sign out</a></li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    @keyframes dropdownFade {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .dropdown-item:hover {
+        background-color: var(--primary-light);
+        color: var(--primary);
+    }
+
+    .dropdown-item:hover i {
+        color: var(--primary) !important;
+    }
+
+    .dropdown-item.text-danger:hover {
+        background-color: rgba(239, 68, 68, 0.1);
+        color: var(--danger) !important;
+    }
+</style>

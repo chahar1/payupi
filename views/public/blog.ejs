@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Blog - Paybilupi</title>
+</head>
+
+<body class="bg-mesh font-outfit d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-light py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="bg-primary bg-gradient text-white rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                    style="width: 36px; height: 36px;">
+                    <i class="fi fi-rr-wallet fs-5 mt-1"></i>
+                </div>
+                <span class="fw-bold fs-4 tracking-tight text-main">Paybilupi</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <a href="/auth/login" class="btn btn-alt px-4 rounded-pill fw-semibold shadow-sm d-none d-sm-block">Sign
+                    In</a>
+                <a href="/auth/register" class="btn btn-premium px-4 rounded-pill fw-semibold shadow-sm">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5 my-5 flex-grow-1">
+        <div class="row mb-5">
+            <div class="col-lg-8" data-aos="fade-up">
+                <h1 class="display-4 fw-bold text-main mb-4">The Paybilupi Blog</h1>
+                <p class="fs-5 text-muted">Thoughts on payments infrastructure, engineering, and growing a business in
+                    the digital era.</p>
+            </div>
+        </div>
+
+        <!-- Featured Post -->
+        <div class="row mb-5 pb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-12">
+                <div class="premium-card overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="h-100 w-100"
+                                style="min-height: 300px; background: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800') center/cover;">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 p-5 d-flex flex-column justify-content-center">
+                            <span
+                                class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 fw-bold mb-3 align-self-start">Engineering</span>
+                            <h2 class="fw-bold text-main mb-3">How We Ported Our Core API from PHP to Node.js in 2 Weeks
+                            </h2>
+                            <p class="text-muted mb-4">Moving a high-throughput financial application across technology
+                                stacks is incredibly risky. Here is a deep dive into our playbook, how we handled
+                                zero-downtime routing, and why Node.js ultimately reduced our latency by 400ms per
+                                transaction.</p>
+                            <a href="#"
+                                class="fw-bold text-primary text-decoration-none d-flex align-items-center gap-2">Read
+                                Full Article <i class="fi fi-rr-arrow-right mt-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article Grid -->
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="premium-card h-100 d-flex flex-column">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600"
+                        class="img-fluid border-bottom border-light" alt="Data charts"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="p-4 flex-grow-1 d-flex flex-column">
+                        <span class="small text-muted fw-bold mb-2">PRODUCT • Oct 12, 2025</span>
+                        <h5 class="fw-bold text-main mb-3">Introducing Multi-Gateway Fallback Routing</h5>
+                        <p class="text-muted small flex-grow-1">Never lose a sale to a gateway outage again. Learn how
+                            our new intelligent routing algorithm automatically cascades failed transactions to
+                            secondary gateways.</p>
+                        <a href="#" class="text-primary fw-bold text-decoration-none small mt-3">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="premium-card h-100 d-flex flex-column">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&q=80&w=600"
+                        class="img-fluid border-bottom border-light" alt="Checkout"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="p-4 flex-grow-1 d-flex flex-column">
+                        <span class="small text-muted fw-bold mb-2">MERCHANT SUCCESS • Sep 28, 2025</span>
+                        <h5 class="fw-bold text-main mb-3">Optimizing checkout UX to increase conversion by 18%</h5>
+                        <p class="text-muted small flex-grow-1">A case study analysis of three high-volume e-commerce
+                            merchants who adopted our glassmorphic checkout UI and saw double-digit revenue increases.
+                        </p>
+                        <a href="#" class="text-primary fw-bold text-decoration-none small mt-3">Read More</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="premium-card h-100 d-flex flex-column">
+                    <img src="https://images.unsplash.com/photo-1507925922893-a4c1cd362ba1?auto=format&fit=crop&q=80&w=600"
+                        class="img-fluid border-bottom border-light" alt="Security"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="p-4 flex-grow-1 d-flex flex-column">
+                        <span class="small text-muted fw-bold mb-2">SECURITY • Sep 14, 2025</span>
+                        <h5 class="fw-bold text-main mb-3">The Anatomy of a Modern Fraud Ring</h5>
+                        <p class="text-muted small flex-grow-1">How our risk engine identified and neutralized a
+                            sophisticated coordinated attack vector targeting UPI collection links.</p>
+                        <a href="#" class="text-primary fw-bold text-decoration-none small mt-3">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>
+</body>
+
+</html>

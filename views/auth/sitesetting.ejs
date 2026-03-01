@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('../partials/head') %>
+        <title>Website Settings | Admin</title>
+</head>
+
+<body class="bg-mesh">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <%- include('../partials/sidebar') %>
+                <div class="col">
+                    <%- include('../partials/header') %>
+
+                        <div class="px-4 py-5" style="min-height: calc(100vh - 70px);">
+                            <div class="mb-5" data-aos="fade-down">
+                                <h2 class="fw-bold mb-1 tracking-tight text-main">Website Settings</h2>
+                                <p class="text-muted small mb-0">Change your brand name, logo, and contact details here.
+                                </p>
+                            </div>
+
+                            <div class="row g-5">
+                                <div class="col-lg-8" data-aos="fade-right" data-aos-delay="100">
+                                    <div class="premium-card p-4 p-lg-5 position-relative overflow-hidden h-100">
+                                        <div class="position-absolute top-0 end-0 p-4 opacity-5 pointer-events-none">
+                                            <i class="fi fi-rr-settings" style="font-size: 8rem;"></i>
+                                        </div>
+
+                                        <div class="position-relative z-1">
+                                            <form action="/auth/sitesetting" method="POST">
+                                                <h5 class="fw-bold mb-4 d-flex align-items-center gap-3 text-main">
+                                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                                        style="width: 40px; height: 40px;">
+                                                        <i class="fi fi-rr-browser fs-6"></i>
+                                                    </div>
+                                                    Brand Configuration
+                                                </h5>
+
+                                                <div class="row g-4">
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Brand
+                                                            Name</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-tags"></i></span>
+                                                            <input type="text" name="brand_name"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= settings.brand_name %>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Website
+                                                            Link</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-globe"></i></span>
+                                                            <input type="url" name="site_link"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= settings.site_link %>" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Logo
+                                                            Image URL</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-picture"></i></span>
+                                                            <input type="url" name="logo_url"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide font-monospace"
+                                                                value="<%= settings.logo_url %>" required
+                                                                placeholder="https://example.com/logo.png">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Support
+                                                            WhatsApp</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-comment-alt-dots"></i></span>
+                                                            <input type="text" name="whatsapp_number"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide"
+                                                                value="<%= settings.whatsapp_number %>" required
+                                                                placeholder="+1234567890">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <label
+                                                            class="form-label extra-small fw-bold text-dim uppercase tracking-widest">Copyright
+                                                            Text</label>
+                                                        <div
+                                                            class="input-group input-group-lg border border-light rounded-3 overflow-hidden shadow-sm">
+                                                            <span
+                                                                class="input-group-text bg-white border-0 text-muted ps-4"><i
+                                                                    class="fi fi-rr-copyright"></i></span>
+                                                            <input type="text" name="copyright_text"
+                                                                class="form-control border-0 ps-2 fs-6 tracking-wide text-muted"
+                                                                value="<%= settings.copyright_text %>" required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 mt-5 pt-3 border-top border-light">
+                                                        <button type="submit"
+                                                            class="btn btn-primary px-5 py-3 shadow-sm rounded-3 fw-bold fs-6 d-flex align-items-center flex-nowrap gap-2 transition-all d-inline-flex">
+                                                            <i class="fi fi-rr-disk"></i> Save Configurations
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4" data-aos="fade-left" data-aos-delay="200">
+                                    <div
+                                        class="premium-card p-4 p-lg-5 h-100 border border-primary border-opacity-10 bg-primary bg-opacity-5 relative overflow-hidden d-flex flex-column align-items-center justify-content-center text-center">
+                                        <div
+                                            class="position-absolute top-0 start-0 w-100 h-100 opacity-10 bg-mesh pointer-events-none">
+                                        </div>
+
+                                        <div class="position-relative z-1 w-100">
+                                            <h6 class="fw-bold text-main mb-4 uppercase tracking-widest small">Live Logo
+                                                Preview</h6>
+
+                                            <div class="bg-white p-4 rounded-4 shadow-sm border border-light d-flex align-items-center justify-content-center mx-auto transition-all hover-scale"
+                                                style="width: 200px; height: 200px;">
+                                                <img src="<%= settings.logo_url %>" alt="Brand Logo" class="img-fluid"
+                                                    style="max-height: 120px; max-width: 100%; object-fit: contain;">
+                                            </div>
+
+                                            <div class="mt-4 pt-4 border-top border-light">
+                                                <p class="extra-small text-muted mb-0"><i
+                                                        class="fi fi-rr-info text-primary me-1"></i> Ensure your logo
+                                                    uses a transparent background for best results.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+    <%- include('../partials/footer') %>
+</body>
+
+</html>
