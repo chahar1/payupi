@@ -29,19 +29,20 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         return res.status(400).json({ status: "FAILED", message: "PLAN_EXPIRED_PLEASE_RENEW" });
     }
 
-    // 3. Check Duplicate Order
+    // 3. Generate Safe Transaction ID (alphanumeric, max 30 chars for UPI compatibility)
+    const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
+
+    // 4. Check Duplicate Order
     const { data: existingOrder } = await supabase
         .from('payments')
         .select('id')
-        .eq('trx_id', order_id)
+        .eq('trx_id', safeTrxId)
         .single();
 
     if (existingOrder) {
         return res.status(400).json({ status: "FAILED", message: "ORDER_ID_ALREADY_EXISTS" });
     }
 
-    // 4. Generate Safe Transaction ID (alphanumeric, max 30 chars for UPI compatibility)
-    const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
     const paymentId = crypto.randomBytes(16).toString('hex');
     const method = user.phonepe_connected === 'Yes' ? 'PhonePe' : (user.paytm_connected === 'Yes' ? 'Paytm' : 'None');
 
@@ -68,7 +69,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
 
     if (insertError) {
         console.error("Insert Error:", insertError);
-        return res.status(500).json({ status: "FAILED", message: "DATABASE_ERROR" });
+        return res.status(500).json({ status: "FAILED", message: "DATABASE_ERROR", detail: insertError.message });
     }
 
     // 5. Generate Direct UPI Intent for Mobile Apps
