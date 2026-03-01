@@ -220,11 +220,9 @@
             <!-- QR Screen -->
             <div id="qr-screen" class="screen text-center">
                 <div class="qr-box">
-                    <% // Clean and shorten the transaction reference (max 35 chars for UPI) const
-                        cleanTr=payment.trx_id.replace(/[^a-zA-Z0-9]/g, '' ).substring(0, 30); const
-                        common_params=`pa=${upiId}&am=${payment.amount}&pn=${encodeURIComponent(payment.users.name)}&tn=${encodeURIComponent(payment.remark1
-                        || 'Payment' )}&tr=${cleanTr}&mc=0000&mode=02&cu=INR`; const
-                        upi_url=`upi://pay?${common_params}`; const
+                    <% const
+                        common_params=`pa=${upiId}&am=${payment.amount}&pn=${encodeURIComponent(payment.users.name)}&tn=${encodeURIComponent(payment.trx_id)}&tr=${payment.trx_id}&mc=4722&cu=INR`;
+                        const upi_url=`upi://pay?${common_params}`; const
                         qr_url=`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upi_url)}&size=250x250`;
                         %>
                         <img src="<%= qr_url %>" alt="QR Code" class="qr-img">

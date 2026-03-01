@@ -71,9 +71,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
     else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-    // Clean and shorten the transaction reference (max 35 chars for UPI)
-    const cleanTr = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
-    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${cleanTr}&tn=${encodeURIComponent(remark1 || 'Payment')}&mc=0000&mode=02&cu=INR`;
+    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${order_id}&tn=${encodeURIComponent(order_id)}&mc=4722&cu=INR`;
 
     res.status(201).json({
         status: true,
@@ -160,8 +158,7 @@ router.post('/verify', async (req, res) => {
                 merchant.phonepe_group_value
             );
 
-            const cleanTr = payment.trx_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
-            const match = trxList.find(t => t.merchantTransactionId === cleanTr || t.merchantTransactionId === payment.trx_id);
+            const match = trxList.find(t => t.merchantTransactionId === payment.trx_id);
             if (match && (match.amount / 100) == payment.amount) {
                 await supabase.from('payments').update({
                     utr: match.utr,
