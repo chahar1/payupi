@@ -5,7 +5,13 @@ const crypto = require('crypto');
 
 // Create Order API
 router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, res) => {
-    const { customer_mobile, user_token, amount, order_id, redirect_url, remark1, remark2 } = req.body;
+    const customer_mobile = req.body.customer_mobile || req.query.customer_mobile;
+    const user_token = req.body.user_token || req.query.user_token || req.body.token || req.query.token;
+    const amount = req.body.amount || req.query.amount;
+    const order_id = req.body.order_id || req.query.order_id || req.body.orderId || req.query.orderId;
+    const redirect_url = req.body.redirect_url || req.query.redirect_url;
+    const remark1 = req.body.remark1 || req.query.remark1;
+    const remark2 = req.body.remark2 || req.query.remark2;
 
     // 1. Validate User
     const { data: user, error: userError } = await supabase
@@ -34,7 +40,8 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         return res.status(400).json({ status: "FAILED", message: "ORDER_ID_ALREADY_EXISTS" });
     }
 
-    // 4. Create Payment Link
+    // 4. Generate Safe Transaction ID (alphanumeric, max 30 chars for UPI compatibility)
+    const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
     const paymentId = crypto.randomBytes(16).toString('hex');
     const method = user.phonepe_connected === 'Yes' ? 'PhonePe' : (user.paytm_connected === 'Yes' ? 'Paytm' : 'None');
 
@@ -48,7 +55,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
             user_id: user.id,
             user_token: user_token,
             payment_id: paymentId,
-            trx_id: order_id,
+            trx_id: safeTrxId,
             customer_mobile: customer_mobile,
             created_on: new Date().toISOString(),
             amount: amount,
@@ -60,6 +67,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         }]);
 
     if (insertError) {
+        console.error("Insert Error:", insertError);
         return res.status(500).json({ status: "FAILED", message: "DATABASE_ERROR" });
     }
 
@@ -71,13 +79,13 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
     else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${order_id}&tn=${encodeURIComponent(order_id)}&mc=4722&cu=INR`;
+    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=4722&cu=INR`;
 
     res.status(201).json({
         status: true,
         message: "Order Created Successfully",
         result: {
-            orderId: order_id,
+            orderId: order_id, // Return original ID to user
             payment_url: `https://${req.headers.host}/payment/${paymentId}`,
             upi_intent: upiIntent
         }
@@ -86,16 +94,18 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
 
 // Check Order API
 router.post(['/check-order', '/check-status', '/api/check-status'], async (req, res) => {
-    const { user_token, order_id } = req.body;
+    const user_token = req.body.user_token || req.query.user_token || req.body.token || req.query.token;
+    const order_id = req.body.order_id || req.query.order_id || req.body.orderId || req.query.orderId;
 
     const { data: user } = await supabase.from('users').select('id').eq('user_token', user_token).single();
     if (!user) return res.status(400).json({ status: "FAILED", message: "INVALID_USER_TOKEN" });
 
+    const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
     const { data: payment } = await supabase
         .from('payments')
         .select('*')
         .eq('user_id', user.id)
-        .eq('trx_id', order_id)
+        .eq('trx_id', safeTrxId)
         .single();
 
     if (payment) {

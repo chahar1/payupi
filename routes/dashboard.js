@@ -343,7 +343,7 @@ router.post('/payment_link', isAuth, async (req, res) => {
     const { name, amount, mobile, remark } = req.body;
     const { data: user } = await supabase.from('users').select('*').eq('id', userId).single();
 
-    const orderId = "TXN" + Math.floor(Math.random() * 90000000000 + 10000000000);
+    const orderId = ("TXN" + Math.floor(Math.random() * 90000000000 + 10000000000)).substring(0, 30);
     const paymentId = require('crypto').randomBytes(16).toString('hex');
 
     // Choose a default method from connected gateways
