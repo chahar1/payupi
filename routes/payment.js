@@ -134,17 +134,33 @@ router.post(['/check-order', '/check-status', '/api/check-status'], async (req, 
         .single();
 
     if (payment) {
+        let currentStatus = payment.status;
+        let currentUtr = payment.utr || "";
+        let paidOn = payment.paid_on;
+
+        // If pending, try verifying from bank
+        if (currentStatus == '0') {
+            const verifyResult = await verifyInternal(payment);
+            if (verifyResult === "SUCCESS") {
+                const { data: updatedPayment } = await supabase.from('payments').select('*').eq('id', payment.id).single();
+                currentStatus = '1';
+                currentUtr = updatedPayment.utr;
+                paidOn = updatedPayment.paid_on;
+            }
+        }
+
         return res.status(200).json({
-            status: payment.status == '1' ? "COMPLETED" : "PENDING",
+            status: currentStatus == '1' ? "COMPLETED" : "PENDING",
             message: "Transaction Details",
             result: {
-                txnStatus: payment.status == '1' ? "COMPLETED" : "PENDING",
-                resultInfo: payment.status == '1' ? "Transaction Success" : "Transaction Pending",
+                txnStatus: currentStatus == '1' ? "COMPLETED" : "PENDING",
+                resultInfo: currentStatus == '1' ? "Transaction Success" : "Transaction Pending",
                 orderId: payment.trx_id,
-                status: payment.status == '1' ? "SUCCESS" : "FAILED",
+                status: currentStatus == '1' ? "SUCCESS" : "FAILED",
                 amount: payment.amount,
                 date: payment.created_on,
-                utr: payment.utr || ""
+                paidOn: paidOn,
+                utr: currentUtr
             }
         });
     } else {
@@ -152,24 +168,17 @@ router.post(['/check-order', '/check-status', '/api/check-status'], async (req, 
     }
 });
 
-// Transaction Verification API (Ported from verify/verify.php)
-router.post('/verify', async (req, res) => {
-    const { trxId } = req.body;
-    if (!trxId) return res.status(400).send("TRX_ID_REQUIRED");
-
-    const { data: payment } = await supabase.from('payments').select('*').eq('trx_id', trxId).single();
-    if (!payment) return res.status(404).send("NOT_FOUND");
-    if (payment.status != '0') return res.send("ALREADY");
-
+// Helper to verify status from bank
+async function verifyInternal(payment) {
     const { data: merchant } = await supabase.from('merchants').select('*').eq('user_id', payment.user_id).single();
-    if (!merchant) return res.status(404).send("MERCHANT_NOT_FOUND");
+    if (!merchant) return "MERCHANT_NOT_FOUND";
 
     let result = "PENDING";
     const method = payment.method;
-
-    const fetch = require('node-fetch');
+    const trxId = payment.trx_id;
 
     try {
+        const fetch = require('node-fetch');
         if (method === 'Paytm') {
             const mid = merchant.paytm_merchant_id;
             const url = `https://securegw.paytm.in/order/status?JsonData=${encodeURIComponent(JSON.stringify({ MID: mid, ORDERID: trxId }))}`;
@@ -189,11 +198,11 @@ router.post('/verify', async (req, res) => {
             const trxList = await phonepe.fetchTrx(
                 merchant.phonepe_token,
                 merchant.phonepe_refresh_token,
-                merchant.phonepe_device_data, // Assuming we stored this or derived it
+                merchant.phonepe_device_data,
                 merchant.phonepe_group_value
             );
 
-            const match = trxList.find(t => t.merchantTransactionId === payment.trx_id);
+            const match = trxList.find(t => t.merchantTransactionId === trxId);
             if (match && (match.amount / 100) == payment.amount) {
                 await supabase.from('payments').update({
                     utr: match.utr,
@@ -225,14 +234,12 @@ router.post('/verify', async (req, res) => {
                 }
             }
         }
-        // Add other methods (Freecharge, etc) as needed
     } catch (err) {
-        console.error("Verification Error:", err);
-        return res.status(500).send("ERROR");
+        console.error("Internal Verification Error:", err);
+        return "ERROR";
     }
 
     if (result === "SUCCESS") {
-        // Trigger Webhook
         const { data: user } = await supabase.from('users').select('callback_url').eq('id', payment.user_id).single();
         if (user && user.callback_url) {
             const { data: updatedPayment } = await supabase.from('payments').select('*').eq('trx_id', trxId).single();
@@ -240,7 +247,19 @@ router.post('/verify', async (req, res) => {
             await sendWebhook(updatedPayment, user.callback_url);
         }
     }
+    return result;
+}
 
+// Transaction Verification API
+router.post('/verify', async (req, res) => {
+    const { trxId } = req.body;
+    if (!trxId) return res.status(400).send("TRX_ID_REQUIRED");
+
+    const { data: payment } = await supabase.from('payments').select('*').eq('trx_id', trxId).single();
+    if (!payment) return res.status(404).send("NOT_FOUND");
+    if (payment.status != '0') return res.send("ALREADY");
+
+    const result = await verifyInternal(payment);
     res.send(result);
 });
 
