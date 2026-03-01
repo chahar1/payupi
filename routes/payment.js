@@ -79,7 +79,8 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
     else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=4722&cu=INR`;
+    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=4722&mode=02&cu=INR`;
+    console.log("Generated UPI Intent:", upiIntent);
 
     res.status(201).json({
         status: true,
