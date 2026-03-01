@@ -29,14 +29,15 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         return res.status(400).json({ status: "FAILED", message: "PLAN_EXPIRED_PLEASE_RENEW" });
     }
 
-    // 3. Generate Safe Transaction ID (alphanumeric, max 30 chars for UPI compatibility)
-    const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
+    // 3. Generate Dashboard-Style Safe ID (TXN + 11 digits)
+    const safeTrxId = "TXN" + Math.floor(Math.random() * 90000000000 + 10000000000);
 
-    // 4. Check Duplicate Order (Idempotency)
+    // 4. Check Duplicate Order (Idempotency check using original order_id in remark2)
     const { data: existingOrder } = await supabase
         .from('payments')
         .select('*')
-        .eq('trx_id', safeTrxId)
+        .eq('user_id', user.id)
+        .eq('remark2', order_id)
         .single();
 
     if (existingOrder) {
@@ -53,7 +54,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
         else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-        const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=4722&mode=02&cu=INR`;
+        const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tr=${existingOrder.trx_id}&tn=${encodeURIComponent(existingOrder.trx_id)}&mc=0000&cu=INR`;
 
         return res.status(200).json({
             status: true,
@@ -87,7 +88,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
             method: method,
             redirect_url: redirect_url,
             remark1: remark1 || 'API_ORDER',
-            remark2: remark2 || 'PAYMENT_LINK'
+            remark2: order_id // Store original ID here
         }]);
 
     if (insertError) {
@@ -103,7 +104,7 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
     else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=4722&mode=02&cu=INR`;
+    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=0000&cu=INR`;
     console.log("Generated UPI Intent:", upiIntent);
 
     res.status(201).json({
@@ -125,12 +126,11 @@ router.post(['/check-order', '/check-status', '/api/check-status'], async (req, 
     const { data: user } = await supabase.from('users').select('id').eq('user_token', user_token).single();
     if (!user) return res.status(400).json({ status: "FAILED", message: "INVALID_USER_TOKEN" });
 
-    const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
     const { data: payment } = await supabase
         .from('payments')
         .select('*')
         .eq('user_id', user.id)
-        .eq('trx_id', safeTrxId)
+        .eq('remark2', order_id) // Search by original ID stored in remark2
         .single();
 
     if (payment) {
