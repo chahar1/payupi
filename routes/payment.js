@@ -32,15 +32,38 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     // 3. Generate Safe Transaction ID (alphanumeric, max 30 chars for UPI compatibility)
     const safeTrxId = order_id.replace(/[^a-zA-Z0-9]/g, '').substring(0, 30);
 
-    // 4. Check Duplicate Order
+    // 4. Check Duplicate Order (Idempotency)
     const { data: existingOrder } = await supabase
         .from('payments')
-        .select('id')
+        .select('*')
         .eq('trx_id', safeTrxId)
         .single();
 
     if (existingOrder) {
-        return res.status(400).json({ status: "FAILED", message: "ORDER_ID_ALREADY_EXISTS" });
+        if (existingOrder.status === '1') {
+            return res.status(400).json({ status: "FAILED", message: "ORDER_ID_ALREADY_EXISTS" });
+        }
+
+        // Return existing pending order details
+        const { data: merchant } = await supabase.from('merchants').select('*').eq('user_id', user.id).single();
+        let upiId = '';
+        const method = existingOrder.method;
+        if (method === 'PhonePe') upiId = merchant.phonepe_upi_id;
+        else if (method === 'Paytm') upiId = merchant.paytm_upi_id;
+        else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
+        else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
+
+        const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tr=${safeTrxId}&tn=${encodeURIComponent(safeTrxId)}&mc=4722&mode=02&cu=INR`;
+
+        return res.status(200).json({
+            status: true,
+            message: "Order already exists. Returning existing details.",
+            result: {
+                orderId: order_id,
+                payment_url: `https://${req.headers.host}/payment/${existingOrder.payment_id}`,
+                upi_intent: upiIntent
+            }
+        });
     }
 
     const paymentId = crypto.randomBytes(16).toString('hex');
