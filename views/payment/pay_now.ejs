@@ -221,7 +221,7 @@
             <div id="qr-screen" class="screen text-center">
                 <div class="qr-box">
                     <% const
-                        common_params=`pa=${upiId}&am=${payment.amount}&pn=${encodeURIComponent(payment.users.name)}&tn=${encodeURIComponent(payment.trx_id)}&tr=${payment.trx_id}&mc=4722&cu=INR`;
+                        common_params=`pa=${upiId}&am=${payment.amount}&pn=${encodeURIComponent(payment.users.name)}&tn=${encodeURIComponent(payment.trx_id)}&tr=${payment.trx_id}&mc=4722&mode=02&cu=INR`;
                         const upi_url=`upi://pay?${common_params}`; const
                         qr_url=`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upi_url)}&size=250x250`;
                         %>
