@@ -6,21 +6,25 @@
   "scripts": {
     "start": "node app.js",
     "dev": "node app.js",
+    "build": "echo 'No build step required'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
-    "@supabase/supabase-js": "^2.98.0",
-    "bcryptjs": "^3.0.3",
-    "body-parser": "^2.2.2",
-    "cookie-parser": "^1.4.7",
+    "@supabase/supabase-js": "^2.45.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
     "crypto-js": "^4.2.0",
-    "dotenv": "^17.3.1",
-    "ejs": "^4.0.1",
-    "express": "^5.2.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
     "node-fetch": "^2.7.0"
   }
 }
