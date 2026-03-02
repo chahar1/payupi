@@ -22,11 +22,24 @@ const supabase = require('./config/supabase');
 
 // Global settings middleware
 app.use(async (req, res, next) => {
+    const defaultSettings = {
+        brand_name: 'Paybilupi',
+        site_link: req.get('host') || 'paybilupi.com',
+        whatsapp_number: '917013583569',
+        logo_url: '/images/logo.png',
+        copyright_text: '© 2026 Paybilupi'
+    };
+
     try {
-        const { data: settings } = await supabase.from('site_settings').select('*').eq('id', 1).single();
-        res.locals.settings = settings || { brand_name: 'Paybilupi', site_link: 'https://paybilupi.com', whatsapp_number: '917013583569' };
+        const { data: settings, error } = await supabase.from('site_settings').select('*').eq('id', 1).single();
+        if (error || !settings) {
+            res.locals.settings = defaultSettings;
+        } else {
+            res.locals.settings = { ...defaultSettings, ...settings };
+        }
     } catch (e) {
-        res.locals.settings = { brand_name: 'Paybilupi', site_link: 'https://paybilupi.com' };
+        console.error('Settings middleware error:', e);
+        res.locals.settings = defaultSettings;
     }
     next();
 });
@@ -56,7 +69,6 @@ app.get('/contact', (req, res) => {
 });
 
 // Dedicated API Docs route with necessary variables
-const supabase = require('./config/supabase');
 app.get('/api-docs', async (req, res) => {
     let user = null;
     if (req.cookies.userId) {
