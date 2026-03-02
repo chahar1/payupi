@@ -30,7 +30,7 @@ apiMethods.forEach(method => {
     });
 });
 
-const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'contact', 'privacy', 'terms', 'refund'];
+const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'contact', 'privacy', 'terms', 'refund', 'api-docs'];
 publicPages.forEach(page => {
     app.get(`/${page}`, (req, res) => {
         res.render(`public/${page}`);
