@@ -30,10 +30,24 @@ apiMethods.forEach(method => {
     });
 });
 
-const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'contact', 'privacy', 'terms', 'refund', 'api-docs'];
+const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'contact', 'privacy', 'terms', 'refund'];
 publicPages.forEach(page => {
     app.get(`/${page}`, (req, res) => {
         res.render(`public/${page}`);
+    });
+});
+
+// Dedicated API Docs route with necessary variables
+const supabase = require('./config/supabase');
+app.get('/api-docs', async (req, res) => {
+    let user = null;
+    if (req.cookies.userId) {
+        const { data } = await supabase.from('users').select('*').eq('id', req.cookies.userId).single();
+        user = data;
+    }
+    res.render('public/api-docs', {
+        host: req.get('host'),
+        user: user
     });
 });
 
