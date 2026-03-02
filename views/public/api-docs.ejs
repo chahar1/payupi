@@ -42,9 +42,11 @@
                 top: 0;
                 background: #fff;
                 border-right: 1px solid var(--docs-border);
-                padding: 1.5rem;
+                padding: 1.5rem 1rem;
                 overflow-y: auto;
                 z-index: 1000;
+                display: flex;
+                flex-direction: column;
             }
 
             /* Main Content Area (Center + Right) */
@@ -81,29 +83,98 @@
             }
 
             .sidebar-heading {
-                font-size: 0.7rem;
-                font-weight: 700;
+                font-size: 0.65rem;
+                font-weight: 800;
                 color: #94a3b8;
                 text-transform: uppercase;
-                margin: 2rem 0 0.75rem 0.5rem;
-                letter-spacing: 0.05em;
+                margin: 2rem 0 0.75rem 0.75rem;
+                letter-spacing: 0.1em;
             }
 
             .sidebar-link {
-                display: block;
-                padding: 0.5rem 0.75rem;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 0.65rem 1rem;
                 color: #64748b;
                 text-decoration: none;
                 font-size: 0.9rem;
                 font-weight: 500;
-                border-radius: 6px;
+                border-radius: 10px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                position: relative;
+                margin-bottom: 2px;
+            }
+
+            .sidebar-link i {
+                font-size: 1rem;
+                color: #94a3b8;
+                transition: all 0.3s;
+            }
+
+            .sidebar-link:hover {
+                background: #f8fafc;
+                color: var(--docs-primary);
+            }
+
+            .sidebar-link:hover i {
+                color: var(--docs-primary);
+                transform: translateX(2px);
+            }
+
+            .sidebar-link.active {
+                background: rgba(79, 70, 229, 0.06);
+                color: var(--docs-primary);
+                font-weight: 600;
+            }
+
+            .sidebar-link.active i {
+                color: var(--docs-primary);
+            }
+
+            .sidebar-link.active::before {
+                content: '';
+                position: absolute;
+                left: -4px;
+                top: 20%;
+                height: 60%;
+                width: 4px;
+                background: var(--docs-primary);
+                border-radius: 0 4px 4px 0;
+            }
+
+            /* Search Bar Placeholder */
+            .sidebar-search {
+                position: relative;
+                margin-bottom: 1.5rem;
+                padding: 0 0.5rem;
+            }
+
+            .sidebar-search input {
+                width: 100%;
+                background: #f1f5f9;
+                border: 1px solid transparent;
+                border-radius: 10px;
+                padding: 0.6rem 1rem 0.6rem 2.5rem;
+                font-size: 0.85rem;
+                color: #1e293b;
                 transition: all 0.2s;
             }
 
-            .sidebar-link:hover,
-            .sidebar-link.active {
-                background: #f8fafc;
-                color: var(--docs-primary);
+            .sidebar-search input:focus {
+                outline: none;
+                background: #fff;
+                border-color: var(--docs-primary);
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            }
+
+            .sidebar-search i {
+                position: absolute;
+                left: 1.25rem;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #94a3b8;
+                font-size: 0.9rem;
             }
 
             /* Content Styling */
@@ -265,7 +336,7 @@
     <div class="docs-container">
         <!-- Sidebar -->
         <aside class="docs-sidebar">
-            <div class="mb-5 px-2">
+            <div class="mb-5 px-3">
                 <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
                     <div
                         style="width:32px;height:32px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;">
@@ -275,28 +346,48 @@
                 </a>
             </div>
 
-            <nav>
+            <div class="sidebar-search">
+                <i class="fi fi-rr-search"></i>
+                <input type="text" placeholder="Search documentation..." id="docsSearch">
+            </div>
+
+            <nav class="flex-grow-1">
                 <div class="sidebar-heading">Getting Started</div>
                 <ul class="sidebar-nav">
-                    <li><a href="#intro" class="sidebar-link active">Introduction</a></li>
-                    <li><a href="#authentication" class="sidebar-link">Authentication</a></li>
-                    <li><a href="#idempotency" class="sidebar-link">Idempotency</a></li>
+                    <li><a href="#intro" class="sidebar-link active"><i class="fi fi-rr-info"></i> Introduction</a></li>
+                    <li><a href="#authentication" class="sidebar-link"><i class="fi fi-rr-shield-check"></i>
+                            Authentication</a></li>
+                    <li><a href="#idempotency" class="sidebar-link"><i class="fi fi-rr-refresh"></i> Idempotency</a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-heading">Core Payments</div>
                 <ul class="sidebar-nav">
-                    <li><a href="#create-order" class="sidebar-link">Create Order</a></li>
-                    <li><a href="#polling-status" class="sidebar-link">Check Status (Polling)</a></li>
-                    <li><a href="#webhooks" class="sidebar-link">Webhooks (Push)</a></li>
+                    <li><a href="#create-order" class="sidebar-link"><i class="fi fi-rr-plus-small"></i> Create
+                            Order</a></li>
+                    <li><a href="#polling-status" class="sidebar-link"><i class="fi fi-rr-search-alt"></i> Check
+                            Status</a></li>
+                    <li><a href="#webhooks" class="sidebar-link"><i class="fi fi-rr-chart-connected"></i> Webhooks</a>
+                    </li>
                 </ul>
 
                 <div class="sidebar-heading">Resources</div>
                 <ul class="sidebar-nav">
-                    <li><a href="#error-codes" class="sidebar-link">Error Codes</a></li>
-                    <li><a href="#sdk-plugins" class="sidebar-link">SDKs & Plugins</a></li>
-                    <li><a href="#support" class="sidebar-link">Technical Support</a></li>
+                    <li><a href="#error-codes" class="sidebar-link"><i class="fi fi-rr-exclamation"></i> Error Codes</a>
+                    </li>
+                    <li><a href="#sdk-plugins" class="sidebar-link"><i class="fi fi-rr-puzzle-piece"></i> SDKs &
+                            Plugins</a></li>
+                    <li><a href="#support" class="sidebar-link"><i class="fi fi-rr-headset"></i> Technical Support</a>
+                    </li>
                 </ul>
             </nav>
+
+            <div class="mt-auto pt-4 border-top border-light">
+                <a href="/auth/dashboard" class="sidebar-link text-primary fw-bold"
+                    style="background: rgba(79, 70, 229, 0.05);">
+                    <i class="fi fi-rr-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
         </aside>
 
         <!-- Main Content -->
@@ -478,6 +569,71 @@
                         </tbody>
                     </table>
                 </section>
+
+                <section id="sdk-plugins">
+                    <h2>SDKs & Plugins</h2>
+                    <p>Integrate Paybilupi into your existing platforms with our official plugins and community SDKs.
+                    </p>
+                    <div class="row g-4 mt-2">
+                        <div class="col-md-6">
+                            <div class="premium-card p-4 border border-light shadow-sm mb-3">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center"
+                                        style="width:40px;height:40px;">
+                                        <i class="fi fi-rr-shopping-cart"></i>
+                                    </div>
+                                    <h4 class="h6 fw-bold mb-0">WooCommerce Plugin</h4>
+                                </div>
+                                <p class="small text-muted mb-3">Easy integration for your WordPress store. Supports
+                                    direct UPI and QR payments.</p>
+                                <a href="#" class="btn btn-sm btn-alt w-100">Download V1.2.0</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="premium-card p-4 border border-light shadow-sm mb-3">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center"
+                                        style="width:40px;height:40px;">
+                                        <i class="fi fi-rr-java"></i>
+                                    </div>
+                                    <h4 class="h6 fw-bold mb-0">Node.js SDK</h4>
+                                </div>
+                                <p class="small text-muted mb-3">Official NPM package for server-side integration.
+                                    Supports async/await patterns.</p>
+                                <a href="#" class="btn btn-sm btn-alt w-100">npm install paybilupi</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="support">
+                    <h2>Technical Support</h2>
+                    <p>Our engineering team is here to help you with your integration 24/7. Whether you have a question
+                        about our APIs or need help debugging a webhook, we've got you covered.</p>
+
+                    <div class="premium-card p-5 bg-primary bg-gradient text-white border-0 shadow-lg mt-4">
+                        <div class="row align-items-center">
+                            <div class="col-lg-8">
+                                <h3 class="text-white mt-0 mb-2">Need direct assistance?</h3>
+                                <p class="text-white text-opacity-75 mb-4">Connect with our integration engineers
+                                    directly on WhatsApp for real-time support.</p>
+                                <div class="d-flex flex-wrap gap-3">
+                                    <a href="https://wa.me/917013583569"
+                                        class="btn btn-light px-4 py-2 rounded-pill fw-bold" target="_blank">
+                                        <i class="fi fi-rr-phone-call me-2"></i> Chat on WhatsApp
+                                    </a>
+                                    <a href="mailto:support@<%= host %>"
+                                        class="btn btn-outline-light px-4 py-2 rounded-pill fw-bold">
+                                        <i class="fi fi-rr-envelope me-2"></i> Email Support
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 d-none d-lg-block text-center">
+                                <i class="fi fi-rr-headset" style="font-size: 5rem; opacity: 0.2;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <!-- Right Sidebar (Code) -->
@@ -564,26 +720,58 @@ async function handlePayment() {
     <script>
         mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
 
+        // Search Logic
+        const docsSearch = document.getElementById('docsSearch');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        docsSearch.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            sidebarLinks.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                const isHeading = link.parentElement.classList.contains('sidebar-heading');
+                if (text.includes(term)) {
+                    link.parentElement.style.display = 'block';
+                } else {
+                    link.parentElement.style.display = term === '' ? 'block' : 'none';
+                }
+            });
+        });
+
         // Scrollspy logic
-        window.addEventListener('load', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const links = document.querySelectorAll('.sidebar-link');
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
 
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    if (pageYOffset >= sectionTop - 100) {
-                        current = section.getAttribute('id');
-                    }
-                });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    sidebarLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
 
-                links.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').includes(current)) {
-                        link.classList.add('active');
+        sections.forEach(section => observer.observe(section));
+
+        // Smooth scroll for anchors
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
                     }
-                });
+                }
             });
         });
     </script>
