@@ -18,6 +18,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+const supabase = require('./config/supabase');
+
+// Global settings middleware
+app.use(async (req, res, next) => {
+    try {
+        const { data: settings } = await supabase.from('site_settings').select('*').eq('id', 1).single();
+        res.locals.settings = settings || { brand_name: 'Paybilupi', site_link: 'https://paybilupi.com', whatsapp_number: '917013583569' };
+    } catch (e) {
+        res.locals.settings = { brand_name: 'Paybilupi', site_link: 'https://paybilupi.com' };
+    }
+    next();
+});
+
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -30,11 +43,16 @@ apiMethods.forEach(method => {
     });
 });
 
-const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'contact', 'privacy', 'terms', 'refund'];
+const publicPages = ['pricing', 'changelog', 'about', 'careers', 'blog', 'privacy', 'terms', 'refund'];
 publicPages.forEach(page => {
     app.get(`/${page}`, (req, res) => {
         res.render(`public/${page}`);
     });
+});
+
+// Dedicated Contact route
+app.get('/contact', (req, res) => {
+    res.render('public/contact');
 });
 
 // Dedicated API Docs route with necessary variables

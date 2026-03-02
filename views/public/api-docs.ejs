@@ -152,7 +152,7 @@
 
             .sidebar-search input {
                 width: 100%;
-                background: #f1f5f9;
+                background: #012952;
                 border: 1px solid transparent;
                 border-radius: 10px;
                 padding: 0.6rem 1rem 0.6rem 2.5rem;
@@ -342,7 +342,9 @@
                         style="width:32px;height:32px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;">
                         <i class="fi fi-rr-wallet text-white"></i>
                     </div>
-                    <span style="font-weight:800;font-size:1.2rem;color:#fff;letter-spacing:-.03em;">Paybilupi</span>
+                    <span style="font-weight:800;font-size:1.2rem;color:#fff;letter-spacing:-.03em;">
+                        <%= settings.brand_name %>
+                    </span>
                 </a>
             </div>
 
@@ -618,7 +620,7 @@
                                 <p class="text-white text-opacity-75 mb-4">Connect with our integration engineers
                                     directly on WhatsApp for real-time support.</p>
                                 <div class="d-flex flex-wrap gap-3">
-                                    <a href="https://wa.me/917013583569"
+                                    <a href="https://wa.me/<%= settings.whatsapp_number %>"
                                         class="btn btn-light px-4 py-2 rounded-pill fw-bold" target="_blank">
                                         <i class="fi fi-rr-phone-call me-2"></i> Chat on WhatsApp
                                     </a>
@@ -778,5 +780,3 @@ async function handlePayment() {
 </body>
 
 </html>
-
-
