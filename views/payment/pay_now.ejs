@@ -221,8 +221,10 @@
             <div id="qr-screen" class="screen text-center">
                 <div class="qr-box">
                     <% const
-                        common_params=`pa=${upiId}&am=${payment.amount}&pn=${encodeURIComponent(payment.users.name)}&tn=${encodeURIComponent(payment.trx_id)}&tr=${payment.trx_id}&mc=0000&cu=INR`;
+                        common_params=`pa=${upiId}&am=${payment.amount}&pn=${encodeURIComponent(payment.users.name)}&tn=${encodeURIComponent(payment.trx_id)}&tr=${payment.trx_id}&mc=4722&cu=INR`;
                         const upi_url=`upi://pay?${common_params}`; const
+                        paytm_url=`paytmmp://cash_wallet?${common_params}&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
+                        const
                         qr_url=`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upi_url)}&size=250x250`;
                         %>
                         <img src="<%= qr_url %>" alt="QR Code" class="qr-img">
@@ -245,7 +247,7 @@
                         <img src="https://download.logo.wine/logo/PhonePe/PhonePe-Logo.wine.png" width="40" height="40"
                             style="object-fit: contain;">
                     </a>
-                    <a href="<%= upi_url %>" class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
+                    <a href="<%= paytm_url %>" class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
                         <img src="https://download.logo.wine/logo/Paytm/Paytm-Logo.wine.png" width="40" height="40"
                             style="object-fit: contain;">
                     </a>
