@@ -238,24 +238,42 @@
             <div id="app-screen" class="screen text-center">
                 <p class="small text-muted mb-4">Select your preferred UPI app to pay directly.</p>
 
-                <div class="d-flex justify-content-center gap-3 mb-4">
-                    <a href="<%= upi_url %>" class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
-                        <img src="https://logodownload.org/wp-content/uploads/2020/06/google-pay-logo-0.png" width="40"
-                            height="40" style="object-fit: contain;">
-                    </a>
-                    <a href="<%= phonepe_url %>" class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
-                        <img src="https://download.logo.wine/logo/PhonePe/PhonePe-Logo.wine.png" width="40" height="40"
-                            style="object-fit: contain;">
-                    </a>
-                    <a href="<%= paytm_url %>" class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
-                        <img src="https://download.logo.wine/logo/Paytm/Paytm-Logo.wine.png" width="40" height="40"
-                            style="object-fit: contain;">
-                    </a>
-                </div>
+                <% const phonepe_ios_url=`phonepe://upi/pay?${common_params}`; %>
 
-                <button class="btn btn-alt w-100 rounded-3 py-2 fw-bold"
-                    onclick="showScreen('selection-screen')">Back</button>
+                    <div class="d-flex justify-content-center gap-3 mb-4">
+                        <a href="<%= upi_url %>" class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
+                            <img src="https://logodownload.org/wp-content/uploads/2020/06/google-pay-logo-0.png"
+                                width="40" height="40" style="object-fit: contain;">
+                        </a>
+                        <a href="javascript:void(0)" onclick="openPhonePe()"
+                            class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
+                            <img src="https://download.logo.wine/logo/PhonePe/PhonePe-Logo.wine.png" width="40"
+                                height="40" style="object-fit: contain;">
+                        </a>
+                        <a href="<%= paytm_url %>"
+                            class="btn btn-light border p-3 rounded-4 transition-all hover-bg-alt">
+                            <img src="https://download.logo.wine/logo/Paytm/Paytm-Logo.wine.png" width="40" height="40"
+                                style="object-fit: contain;">
+                        </a>
+                    </div>
+
+                    <button class="btn btn-alt w-100 rounded-3 py-2 fw-bold"
+                        onclick="showScreen('selection-screen')">Back</button>
             </div>
+
+            <script>
+                function openPhonePe() {
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+                    const phonepe_android = "<%= phonepe_url %>";
+                    const phonepe_ios = "<%= phonepe_ios_url %>";
+
+                    if (isIOS) {
+                        window.location.href = phonepe_ios;
+                    } else {
+                        window.location.href = phonepe_android;
+                    }
+                }
+            </script>
 
             <!-- Status Indicator -->
             <div class="d-flex align-items-center justify-content-center gap-2 mt-4 pt-4 border-top">

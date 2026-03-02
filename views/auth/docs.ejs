@@ -66,12 +66,59 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+
+                                            <div
+                                                class="p-4 bg-light rounded-4 border-start border-primary border-4 mb-4">
+                                                <h6 class="fw-bold text-primary mb-2 small"><i
+                                                        class="fi fi-rr-smartphone me-2"></i>Native Mobile App Flow</h6>
+                                                <p class="extra-small text-muted mb-3">To show QR and UPI apps directly
+                                                    in your mobile app, use these response parameters:</p>
+                                                <div class="bg-dark p-3 rounded-3 text-white shadow-sm mb-3">
+                                                    <pre class="mb-0 extra-small text-info">
+{
+  "qr_data": "upi://pay?...", // For native QR generation
+  "qr_image_url": "https://...", // Direct QR image link
+  "paytm_intent": "paytmmp://...",
+  "phonepe_intent": "phonepe://...",
+  "gpay_intent": "upi://pay?...",
+  "timeout_seconds": 300 // Strict 5-minute window
+}</pre>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <hr class="my-5 opacity-5">
 
                                         <div class="mb-5">
-                                            <h5 class="fw-bold text-main mb-4">2. Webhook Notification</h5>
+                                            <h5 class="fw-bold text-main mb-4">2. Check Status (Polling)</h5>
+                                            <p class="small text-muted mb-4">Since mobile apps don't use redirect URLs,
+                                                you MUST poll this API every 3-5 seconds to check payment status.</p>
+
+                                            <div class="d-flex align-items-center gap-3 mb-3">
+                                                <span class="badge bg-primary px-3 py-2">POST</span>
+                                                <code
+                                                    class="text-primary fw-bold">http://<%= host %>/api/check-status</code>
+                                            </div>
+
+                                            <div class="bg-dark p-4 rounded-3 text-white shadow-sm">
+                                                <pre class="mb-0 small text-info">
+// Request Body
+{
+  "user_token": "YOUR_TOKEN",
+  "order_id": "YOUR_ORDER_ID"
+}
+
+// Possible Status Responses:
+"COMPLETED" : Payment Success
+"PENDING"   : Payment Awaited
+"EXPIRED"   : 5 Minute window closed</pre>
+                                            </div>
+                                        </div>
+
+                                        <hr class="my-5 opacity-5">
+
+                                        <div class="mb-5">
+                                            <h5 class="fw-bold text-main mb-4">3. Webhook Notification</h5>
                                             <p class="small text-muted mb-4">We will send a POST request to your
                                                 Callback URL once payment is verified.</p>
                                             <div class="bg-dark p-4 rounded-3 text-white shadow-sm">

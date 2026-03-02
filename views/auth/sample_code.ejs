@@ -276,7 +276,7 @@
                                         </div>
 
                                         <!-- Python Tab -->
-                                        <div class="tab-pane fade" id="python" role="tabpanel"
+                                         <div class="tab-pane fade" id="python" role="tabpanel"
                                             aria-labelledby="python-tab">
                                             <pre class="mb-0 text-info font-monospace small code-block"
                                                 style="white-space: pre-wrap; line-height: 1.6;"><span class="text-warning">import</span> requests
@@ -296,6 +296,58 @@
 
 <span class="text-primary">response</span> = requests.<span class="text-success">post</span>(url, <span class="text-warning">json</span>=payload, <span class="text-warning">headers</span>=headers)
 <span class="text-success">print</span>(response.<span class="text-success">json</span>())
+</pre>
+                                        </div>
+
+                                        <!-- Mobile App Tab -->
+                                        <div class="tab-pane fade" id="mobile" role="tabpanel"
+                                            aria-labelledby="mobile-tab">
+                                            <pre class="mb-0 text-info font-monospace small code-block"
+                                                style="white-space: pre-wrap; line-height: 1.6;"><span class="text-muted">// React Native / Expo Example</span>
+<span class="text-warning">import</span> { Linking, Image } <span class="text-warning">from</span> <span class="text-danger">'react-native'</span>;
+
+<span class="text-warning">const</span> <span class="text-success">initiatePayment</span> = <span class="text-warning">async</span> () => {
+    <span class="text-warning">const</span> <span class="text-primary">response</span> = <span class="text-warning">await</span> <span class="text-success">fetch</span>(<span class="text-danger">'http://<%= host %>/api/create-order'</span>, {
+        method: <span class="text-danger">'POST'</span>,
+        headers: { <span class="text-danger">'Content-Type'</span>: <span class="text-danger">'application/json'</span> },
+        body: <span class="text-primary">JSON</span>.<span class="text-success">stringify</span>({
+            customer_mobile: <span class="text-danger">"9999999999"</span>,
+            user_token: <span class="text-danger">"<%= user.user_token %>"</span>,
+            amount: <span class="text-danger">"10.00"</span>,
+            order_id: <span class="text-danger">"ORDER_"</span> + <span class="text-primary">Date</span>.<span class="text-success">now</span>()
+        })
+    });
+
+    <span class="text-warning">const</span> <span class="text-primary">data</span> = <span class="text-warning">await</span> <span class="text-primary">response</span>.<span class="text-success">json</span>();
+    
+    <span class="text-warning">if</span> (<span class="text-primary">data</span>.status) {
+        <span class="text-muted">// 1. Display data.result.qr_url in an Image component</span>
+        <span class="text-muted">// 2. Use Linking to open UPI Apps:</span>
+        <span class="text-muted">// Linking.openURL(data.result.upi_intent); // For GPay/Generic</span>
+        <span class="text-muted">// Linking.openURL(data.result.paytm_intent); // For Paytm</span>
+        
+        <span class="text-muted">// 3. Start Polling for Status:</span>
+        <span class="text-warning">const</span> <span class="text-primary">interval</span> = <span class="text-success">setInterval</span>(<span class="text-warning">async</span> () => {
+            <span class="text-warning">const</span> <span class="text-primary">res</span> = <span class="text-warning">await</span> <span class="text-success">fetch</span>(<span class="text-danger">'http://<%= host %>/api/check-status'</span>, {
+                method: <span class="text-danger">'POST'</span>,
+                headers: { <span class="text-danger">'Content-Type'</span>: <span class="text-danger">'application/json'</span> },
+                body: <span class="text-primary">JSON</span>.<span class="text-success">stringify</span>({
+                    user_token: <span class="text-danger">"<%= user.user_token %>"</span>,
+                    order_id: <span class="text-primary">data</span>.result.orderId
+                })
+            });
+            <span class="text-warning">const</span> <span class="text-primary">statusData</span> = <span class="text-warning">await</span> <span class="text-primary">res</span>.<span class="text-success">json</span>();
+            
+            <span class="text-warning">if</span> (<span class="text-primary">statusData</span>.status === <span class="text-danger">'COMPLETED'</span>) {
+                <span class="text-success">clearInterval</span>(<span class="text-primary">interval</span>);
+                <span class="text-success">alert</span>(<span class="text-danger">'Payment Successful!'</span>);
+            } <span class="text-warning">else if</span> (<span class="text-primary">statusData</span>.status === <span class="text-danger">'EXPIRED'</span>) {
+                <span class="text-success">clearInterval</span>(<span class="text-primary">interval</span>);
+                <span class="text-success">alert</span>(<span class="text-danger">'Payment Expired!'</span>);
+            }
+        }, 3000);
+    }
+};
 </pre>
                                         </div>
 

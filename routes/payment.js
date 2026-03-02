@@ -57,16 +57,29 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR&mode=02&purpose=00`;
         const paytmIntent = `paytmmp://cash_wallet?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&cu=INR&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&mode=02&purpose=00&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
         const phonepeIntent = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR&mode=02&purpose=00`;
+        const phonepeIosIntent = `phonepe://upi/pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR&mode=02&purpose=00`;
+
+        const expiryDate = new Date(existingOrder.created_on);
+        expiryDate.setMinutes(expiryDate.getMinutes() + 5);
 
         return res.status(200).json({
             status: true,
             message: "Order already exists. Returning existing details.",
             result: {
                 orderId: order_id,
+                payment_id: existingOrder.payment_id,
                 payment_url: `https://${req.headers.host}/payment/${existingOrder.payment_id}`,
+                qr_data: upiIntent,
                 upi_intent: upiIntent,
                 paytm_intent: paytmIntent,
-                phonepe_intent: phonepeIntent
+                phonepe_intent: phonepeIntent,
+                phonepe_ios_intent: phonepeIosIntent,
+                gpay_intent: upiIntent,
+                gpay_ios_intent: `googlepay://upi/pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR&mode=02&purpose=00`,
+                qr_image_url: `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiIntent)}&size=250x250`,
+                expiry_at: expiryDate.toISOString(),
+                timeout_seconds: Math.max(0, Math.floor((expiryDate - new Date()) / 1000)),
+                check_status_url: `https://${req.headers.host}/api/check-status`
             }
         });
     }
@@ -111,17 +124,30 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR&mode=02&purpose=00`;
     const paytmIntent = `paytmmp://cash_wallet?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&mode=02&purpose=00&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
     const phonepeIntent = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR&mode=02&purpose=00`;
+    const phonepeIosIntent = `phonepe://upi/pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR&mode=02&purpose=00`;
     console.log("Generated UPI Intent:", upiIntent);
+
+    const expiryDate = new Date();
+    expiryDate.setMinutes(expiryDate.getMinutes() + 5);
 
     res.status(201).json({
         status: true,
         message: "Order Created Successfully",
         result: {
-            orderId: order_id, // Return original ID to user
+            orderId: order_id,
+            payment_id: paymentId,
             payment_url: `https://${req.headers.host}/payment/${paymentId}`,
+            qr_data: upiIntent,
             upi_intent: upiIntent,
             paytm_intent: paytmIntent,
-            phonepe_intent: phonepeIntent
+            phonepe_intent: phonepeIntent,
+            phonepe_ios_intent: phonepeIosIntent,
+            gpay_intent: upiIntent,
+            gpay_ios_intent: `googlepay://upi/pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR&mode=02&purpose=00`,
+            qr_image_url: `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiIntent)}&size=250x250`,
+            expiry_at: expiryDate.toISOString(),
+            timeout_seconds: 300,
+            check_status_url: `https://${req.headers.host}/api/check-status`
         }
     });
 });
@@ -146,8 +172,26 @@ router.post(['/check-order', '/check-status', '/api/check-status'], async (req, 
         let currentUtr = payment.utr || "";
         let paidOn = payment.paid_on;
 
-        // If pending, try verifying from bank
+        // If pending, check for 5-minute timeout
         if (currentStatus == '0') {
+            const createdOn = new Date(payment.created_on);
+            const now = new Date();
+            if ((now - createdOn) > 5 * 60 * 1000) {
+                return res.status(200).json({
+                    status: "EXPIRED",
+                    message: "Transaction Expired",
+                    result: {
+                        txnStatus: "EXPIRED",
+                        resultInfo: "Transaction Timeout (5 Minutes)",
+                        orderId: payment.trx_id,
+                        status: "FAILED",
+                        amount: payment.amount,
+                        date: payment.created_on
+                    }
+                });
+            }
+
+            // If not expired, try verifying from bank
             const verifyResult = await verifyInternal(payment);
             if (verifyResult === "SUCCESS") {
                 const { data: updatedPayment } = await supabase.from('payments').select('*').eq('id', payment.id).single();
