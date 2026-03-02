@@ -54,8 +54,9 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
         else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
         else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-        const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR`;
-        const paytmIntent = `paytmmp://cash_wallet?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&cu=INR&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
+        const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR&mode=02&purpose=00`;
+        const paytmIntent = `paytmmp://cash_wallet?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&cu=INR&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&mode=02&purpose=00&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
+        const phonepeIntent = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${existingOrder.amount}&tn=${encodeURIComponent(existingOrder.trx_id)}&tr=${existingOrder.trx_id}&mc=4722&cu=INR&mode=02&purpose=00`;
 
         return res.status(200).json({
             status: true,
@@ -64,7 +65,8 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
                 orderId: order_id,
                 payment_url: `https://${req.headers.host}/payment/${existingOrder.payment_id}`,
                 upi_intent: upiIntent,
-                paytm_intent: paytmIntent
+                paytm_intent: paytmIntent,
+                phonepe_intent: phonepeIntent
             }
         });
     }
@@ -106,8 +108,9 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
     else if (method === 'BharatPe') upiId = merchant.bharatpe_upi_id;
     else if (method === 'Google Pay' || method === 'Gpay') upiId = merchant.gpay_upi_id;
 
-    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR`;
-    const paytmIntent = `paytmmp://cash_wallet?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
+    const upiIntent = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR&mode=02&purpose=00`;
+    const paytmIntent = `paytmmp://cash_wallet?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&cu=INR&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&mode=02&purpose=00&&sign=AAuN7izDWN5cb8A5scnUiNME+LkZqI2DWgkXlN1McoP6WZABa/KkFTiLvuPRP6/nWK8BPg/rPhb+u4QMrUEX10UsANTDbJaALcSM9b8Wk218X+55T/zOzb7xoiB+BcX8yYuYayELImXJHIgL/c7nkAnHrwUCmbM97nRbCVVRvU0ku3Tr&featuretype=money_transfer`;
+    const phonepeIntent = `phonepe://pay?pa=${upiId}&pn=${encodeURIComponent(user.name)}&am=${amount}&tn=${encodeURIComponent(safeTrxId)}&tr=${safeTrxId}&mc=4722&cu=INR&mode=02&purpose=00`;
     console.log("Generated UPI Intent:", upiIntent);
 
     res.status(201).json({
@@ -117,7 +120,8 @@ router.post(['/createOrder', '/create-order', '/api/create-order'], async (req, 
             orderId: order_id, // Return original ID to user
             payment_url: `https://${req.headers.host}/payment/${paymentId}`,
             upi_intent: upiIntent,
-            paytm_intent: paytmIntent
+            paytm_intent: paytmIntent,
+            phonepe_intent: phonepeIntent
         }
     });
 });
