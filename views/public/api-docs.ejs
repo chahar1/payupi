@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+        <title>API Documentation | Paybilupi</title>
+        <!-- Prism.js for code highlighting -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+            rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+        <style>
+            :root {
+                --docs-sidebar-width: 280px;
+                --docs-primary: #4f46e5;
+                --docs-bg: #f8faff;
+                --docs-border: #e4e9f2;
+                --docs-text: #1e293b;
+                --docs-text-muted: #64748b;
+            }
+
+            body {
+                background-color: var(--docs-bg);
+                color: var(--docs-text);
+                font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            }
+
+            .docs-layout {
+                display: flex;
+                min-height: 100vh;
+            }
+
+            .docs-sidebar {
+                width: var(--docs-sidebar-width);
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                background: #fff;
+                border-right: 1px solid var(--docs-border);
+                padding: 2rem 1.5rem;
+                overflow-y: auto;
+                z-index: 100;
+            }
+
+            .docs-content {
+                flex: 1;
+                margin-left: var(--docs-sidebar-width);
+                padding: 3rem 4rem;
+                max-width: 1000px;
+            }
+
+            .sidebar-nav {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .sidebar-item {
+                margin-bottom: 0.5rem;
+            }
+
+            .sidebar-link {
+                display: block;
+                padding: 0.5rem 1rem;
+                color: var(--docs-text-muted);
+                text-decoration: none;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                font-weight: 500;
+                transition: all 0.2s;
+            }
+
+            .sidebar-link:hover,
+            .sidebar-link.active {
+                background: rgba(79, 70, 229, 0.08);
+                color: var(--docs-primary);
+            }
+
+            .sidebar-heading {
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--docs-text-muted);
+                margin: 1.5rem 0 0.75rem 1rem;
+                font-weight: 700;
+            }
+
+            .endpoint-badge {
+                display: inline-block;
+                padding: 0.25rem 0.6rem;
+                border-radius: 6px;
+                font-size: 0.75rem;
+                font-weight: 800;
+                margin-right: 0.75rem;
+                text-transform: uppercase;
+            }
+
+            .badge-post {
+                background: #ecfdf5;
+                color: #059669;
+            }
+
+            .badge-get {
+                background: #eff6ff;
+                color: #2563eb;
+            }
+
+            .code-window {
+                background: #1e293b;
+                border-radius: 12px;
+                margin: 1.5rem 0;
+                overflow: hidden;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            }
+
+            .code-header {
+                background: #334155;
+                padding: 0.75rem 1.25rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .code-lang {
+                color: #94a3b8;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .param-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1.5rem 0;
+                background: #fff;
+                border-radius: 12px;
+                overflow: hidden;
+                border: 1px solid var(--docs-border);
+            }
+
+            .param-table th {
+                background: #f1f5f9;
+                padding: 1rem;
+                text-align: left;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: var(--docs-text);
+            }
+
+            .param-table td {
+                padding: 1rem;
+                border-top: 1px solid var(--docs-border);
+                font-size: 0.85rem;
+                vertical-align: top;
+            }
+
+            .required-mark {
+                color: #ef4444;
+                font-weight: 700;
+                font-size: 0.75rem;
+            }
+
+            .method-url {
+                background: #f1f5f9;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.9rem;
+                color: var(--docs-text);
+                border: 1px solid var(--docs-border);
+                display: flex;
+                align-items: center;
+                margin-bottom: 2rem;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+                font-weight: 800;
+                margin-bottom: 1.5rem;
+                letter-spacing: -0.025em;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-top: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                line-height: 1.6;
+                color: var(--docs-text-muted);
+            }
+
+            @media (max-width: 768px) {
+                .docs-sidebar {
+                    display: none;
+                }
+
+                .docs-content {
+                    margin-left: 0;
+                    padding: 2rem;
+                }
+            }
+
+            .mermaid {
+                background: #fff;
+                padding: 2rem;
+                border-radius: 12px;
+                border: 1px solid var(--docs-border);
+                margin: 2rem 0;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="docs-layout">
+        <aside class="docs-sidebar">
+            <div class="mb-4">
+                <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <div
+                        style="width:32px;height:32px;background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:8px;display:flex;align-items:center;justify-content:center;">
+                        <i class="fi fi-rr-wallet text-white fs-6"></i>
+                    </div>
+                    <span
+                        style="font-weight:800;font-size:1.1rem;color:var(--docs-text);letter-spacing:-.03em;">Paybilupi</span>
+                </a>
+            </div>
+
+            <nav>
+                <div class="sidebar-heading">Introduction</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item"><a href="#getting-started" class="sidebar-link active">Getting Started</a>
+                    </li>
+                    <li class="sidebar-item"><a href="#authentication" class="sidebar-link">Authentication</a></li>
+                </ul>
+
+                <div class="sidebar-heading">API Reference</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item"><a href="#create-order" class="sidebar-link">Create Order</a></li>
+                    <li class="sidebar-item"><a href="#check-status" class="sidebar-link">Check Status</a></li>
+                </ul>
+
+                <div class="sidebar-heading">Integration</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-item"><a href="#webhooks" class="sidebar-link">Webhooks</a></li>
+                    <li class="sidebar-item"><a href="#error-codes" class="sidebar-link">Error Codes</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <section id="getting-started">
+                <h1>Developer Documentation</h1>
+                <p>Welcome to the Paybilupi API. Our API relies on standard HTTP methods and returns JSON-formatted
+                    responses. This guide will help you integrate UPI payments into your application with extreme ease.
+                </p>
+
+                <h2>Integration Flow</h2>
+                <div class="mermaid">
+                    sequenceDiagram
+                    participant M as Merchant App
+                    participant P as Paybilupi Gateway
+                    participant U as UPI App (Client)
+
+                    M->>P: POST /api/create-order
+                    P-->>M: Return payment_url & upi_intent
+                    M->>U: Redirect user or open intent
+                    U->>P: Real-time Bank Sync
+                    P->>M: POST Webhook (Status Update)
+                </div>
+            </section>
+
+            <section id="authentication">
+                <h2>Authentication</h2>
+                <p>All API requests must be authenticated using your <strong>Secret Token</strong>. You can find this in
+                    your merchant dashboard under "Developer Settings".</p>
+                <div class="alert alert-warning"
+                    style="background: #fff7ed; border-left: 4px solid #f97316; padding: 1rem; border-radius: 8px;">
+                    <strong>Security Warning:</strong> Never share your <code>user_token</code> in client-side code
+                    (JavaScript, HTML). Always make API calls from your backend server.
+                </div>
+            </section>
+
+            <section id="create-order">
+                <h2>Create Order</h2>
+                <p>Initiate a new transaction and generate a payment link or UPI intent string.</p>
+
+                <div class="method-url">
+                    <span class="endpoint-badge badge-post">POST</span>
+                    <code>https://<%= host %>/api/create-order</code>
+                </div>
+
+                <h5>Request Parameters</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>user_token</code></td>
+                            <td>String</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>Your Secret API Key.</td>
+                        </tr>
+                        <tr>
+                            <td><code>amount</code></td>
+                            <td>Number</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>Transaction amount (e.g., 100.00).</td>
+                        </tr>
+                        <tr>
+                            <td><code>order_id</code></td>
+                            <td>String</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>Unique identifier from your system.</td>
+                        </tr>
+                        <tr>
+                            <td><code>customer_mobile</code></td>
+                            <td>String</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>10-digit mobile number for notification.</td>
+                        </tr>
+                        <tr>
+                            <td><code>redirect_url</code></td>
+                            <td>String</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>URL to send user after payment.</td>
+                        </tr>
+                        <tr>
+                            <td><code>remark1</code></td>
+                            <td>String</td>
+                            <td>NO</td>
+                            <td>Custom note (stored in our dashboard).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5>Success Response</h5>
+                <div class="code-window">
+                    <div class="code-header">
+                        <span class="code-lang">JSON</span>
+                    </div>
+                    <pre><code class="language-json">{
+  "status": true,
+  "message": "Order Created Successfully",
+  "result": {
+    "orderId": "MY_ORD_123",
+    "payment_url": "https://<%= host %>/payment/5f...e2",
+    "upi_intent": "upi://pay?pa=...&am=100.00&tr=TXN_..."
+  }
+}</code></pre>
+                </div>
+
+                <p><strong>Idempotency:</strong> If you send a request with an <code>order_id</code> that already exists
+                    for your account, we will return the existing pending order details instead of creating a new one.
+                </p>
+            </section>
+
+            <section id="check-status">
+                <h2>Check Status</h2>
+                <p>Verify the current status of a transaction using your original order ID.</p>
+
+                <div class="method-url">
+                    <span class="endpoint-badge badge-post">POST</span>
+                    <code>https://<%= host %>/api/check-status</code>
+                </div>
+
+                <h5>Request Parameters</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Required</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>user_token</code></td>
+                            <td>String</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>Your Secret API Key.</td>
+                        </tr>
+                        <tr>
+                            <td><code>order_id</code></td>
+                            <td>String</td>
+                            <td><span class="required-mark">YES</span></td>
+                            <td>The order ID used during creation.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5>Response Fields</h5>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>txnStatus</code></td>
+                            <td><code>COMPLETED</code> or <code>PENDING</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>utr</code></td>
+                            <td>Bank reference number (after success).</td>
+                        </tr>
+                        <tr>
+                            <td><code>amount</code></td>
+                            <td>The processed amount.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="webhooks">
+                <h2>Webhooks</h2>
+                <p>Webhooks allow you to receive real-time notifications when a payment status changes to SUCCESS. We
+                    send a <code>POST</code> request with both JSON and Form-Encoded payloads to ensure compatibility.
+                </p>
+
+                <h5>Webhook Payload Example</h5>
+                <div class="code-window">
+                    <div class="code-header">
+                        <span class="code-lang">JSON</span>
+                    </div>
+                    <pre><code class="language-json">{
+  "trx_id": "TXN_48215520114",
+  "amount": "100.00",
+  "status": "1",
+  "utr": "412233445566",
+  "paid_on": "2024-03-02 12:45:00",
+  "remark2": "MY_ORD_123"
+}</code></pre>
+                </div>
+                <p><small>* <code>remark2</code> contains your original <code>order_id</code>.</small></p>
+            </section>
+
+            <section id="code-samples">
+                <h2>Code Samples</h2>
+                <p>Use these production-ready snippets to jumpstart your integration.</p>
+
+                <ul class="nav nav-tabs mb-3" id="sampleTabs" role="tablist">
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab"
+                            data-bs-target="#node-req">Node.js</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab"
+                            data-bs-target="#php-req">PHP</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-target="#python-req">Python</button></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="node-req">
+                        <div class="code-window">
+                            <div class="code-header"><span class="code-lang">javascript (axios)</span></div>
+                            <pre><code class="language-javascript">const axios = require('axios');
+
+async function createOrder() {
+    const payload = {
+        user_token: "YOUR_SECRET_KEY",
+        amount: "500.00",
+        order_id: "ORDER_9921",
+        customer_mobile: "9876543210",
+        redirect_url: "https://yourwebsite.com/callback"
+    };
+
+    try {
+        const response = await axios.post('https://<%= host %>/api/create-order', payload);
+        if (response.data.status) {
+            // Redirect user to payment session
+            window.location.href = response.data.result.payment_url;
+        }
+    } catch (error) {
+        console.error("Payment Error:", error.response.data);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="php-req">
+                        <div class="code-window">
+                            <div class="code-header"><span class="code-lang">PHP (cURL)</span></div>
+                            <pre><code class="language-php">&lt;?php
+$data = [
+    "user_token" => "YOUR_SECRET_KEY",
+    "amount" => "500.00",
+    "order_id" => "ORDER_9921",
+    "customer_mobile" => "9876543210",
+    "redirect_url" => "https://yourwebsite.com/callback"
+];
+
+$ch = curl_init("https://<%= host %>/api/create-order");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+$response = json_decode(curl_exec($ch), true);
+
+if ($response['status']) {
+    header("Location: " . $response['result']['payment_url']);
+} else {
+    echo "Error: " . $response['message'];
+}
+?&gt;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="python-req">
+                        <div class="code-window">
+                            <div class="code-header"><span class="code-lang">Python (requests)</span></div>
+                            <pre><code class="language-python">import requests
+
+payload = {
+    "user_token": "YOUR_SECRET_KEY",
+    "amount": "500.00",
+    "order_id": "ORDER_9921",
+    "customer_mobile": "9876543210",
+    "redirect_url": "https://yourwebsite.com/callback"
+}
+
+response = requests.post("https://<%= host %>/api/create-order", json=payload)
+data = response.json()
+
+if data.get("status"):
+    print(f"Follow this link to pay: {data['result']['payment_url']}")</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="error-codes">
+                <h2>Error Codes</h2>
+                <p>Our API uses standard HTTP response codes to indicate the success or failure of an API request.</p>
+                <table class="param-table">
+                    <thead>
+                        <tr>
+                            <th>Message</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>INVALID_USER_TOKEN</code></td>
+                            <td>The provided <code>user_token</code> is incorrect or inactive.</td>
+                        </tr>
+                        <tr>
+                            <td><code>PLAN_EXPIRED_PLEASE_RENEW</code></td>
+                            <td>Your subscription plan has expired. Please renew from the dashboard.</td>
+                        </tr>
+                        <tr>
+                            <td><code>ORDER_ID_ALREADY_EXISTS</code></td>
+                            <td>This <code>order_id</code> has already been completed.</td>
+                        </tr>
+                        <tr>
+                            <td><code>MERCHANT_NOT_LINKED</code></td>
+                            <td>Payment methods (Paytm/PhonePe) are not linked to your account.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+
+        // Simple scroll spy and active link highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
